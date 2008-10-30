@@ -5,8 +5,12 @@
 
 = Details =
 
-  1、tar zxvf iptux-0.x.x.tar.gz
-  2、cd iptux-0.x.x
-  3、./configure
-  4、make 
-  5、sudo make install
+  1. tar zxvf iptux-0.x.x.tar.gz
+
+  2. cd iptux-0.x.x
+
+  3. ./configure
+
+  4. make 
+
+  5. sudo make install
