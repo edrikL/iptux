@@ -1,12 +1,12 @@
-
+#labels Phase-Deploy,Phase-Implementation,Featured
 = Introduction =
 
 如何安装IpTux？
 
-
 = Details =
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+  1、tar zxvf iptux-0.x.x.tar.gz
+  2、cd iptux-0.x.x
+  3、./configure
+  4、make 
+  5、sudo make install
