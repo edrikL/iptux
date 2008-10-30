@@ -1,4 +1,4 @@
-#labels Phase-Implementation,Phase-Support,Deprecated
+#labels Phase-Implementation,Phase-Support,Phase-Implementation
 = Introduction =
 
 急需翻译
