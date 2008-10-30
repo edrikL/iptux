@@ -1,11 +1,11 @@
-#labels Phase-Deploy,Phase-Implementation,Featured
+#labels Phase-Deploy
 = Introduction =
 
 如何安装IpTux？
 
 = Details =
 
-  1. tar zxvf iptux-0.x.x.tar.gz
+    1. tar zxvf iptux-0.x.x.tar.gz
 
   2. cd iptux-0.x.x
 
