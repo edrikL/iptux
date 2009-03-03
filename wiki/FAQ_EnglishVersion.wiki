@@ -1,0 +1,34 @@
+#labels Featured,Phase-Deploy,Phase-Support,FAQ,EnglishVersion
+=Frequently Asked Questions=
+
+==1. Iptux failed to detect or connect to other clients.==
+
+Be sure you didn't have your system firewall block your TCP/UDP port 2425, which iptux uses.
+
+In some networks, your administrator may set some rules to the switcher filtering broadcast frames in the concern of security, this may leadiptux fail to find other clients, you may try adding your pal's IP by File->Detect, he or she should be appeared in your buddy list.
+
+
+==2.Iptux crashed when applying the Setting dialog.==
+
+I'm sure you're one of our old users or at least have one of the old version of iptux run in your system, which had left something dirty behind in ~/.cache/iptux, this should work magically: 
+
+{{{rm -rfv ~/.cache/iptux}}}
+
+
+==3.Iptux stop working when received a message, finished transporting a file...==
+
+This issue is about the sound problem. Maybe you're playing Mp3 using mplay, mpg123 etc. which would probably occupy the sound hardware exclusively.
+
+The best solution is to disabe the sound playing of iptux by unchecking Tools->Setting->Sound->Sound Supported. Or you may prefer solving your system's sound problem about what was call "Mixing Stream".
+
+
+==4. Where did iptux hide my files?==
+
+er...Iptux would defaultly storage all the received files in your home directory.  But if your friend sending you a picture by instering  it in the chat view, it would be in ~/.cache/iptux/pic. And your buddy's customed faces in ~/.cache/iptux/icon and ~/.cache/iptux/ads.
+
+iptux also stores log files in  ~/.config/iptux, if you want to clear this, please be sure to clean ~/.gconf/apps/iptux together, in case of someting go wrong.
+
+
+==5. Iptux failed to compile...==
+
+Congratulation to me that new problem was found!!! Please please email us this by pasting all the error details. Our mailing list: iptux@googlegroups.com
