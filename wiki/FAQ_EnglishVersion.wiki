@@ -1,4 +1,4 @@
-#labels Featured,Phase-Deploy,Phase-Support,FAQ,EnglishVersion
+#labels Phase-Deploy,Phase-Support,FAQ,EnglishVersion
 =Frequently Asked Questions=
 
 ==1. Iptux failed to detect or connect to other clients.==
