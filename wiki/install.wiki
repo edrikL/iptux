@@ -1,17 +1,48 @@
-#labels Phase-Deploy
+#labels Phase-Deploy,InstallationGuide,安装向导
 = Introduction =
 
-如何安装？
+如何从源码编译安装iptux？
+Build and Install iptux 
 
-= Details =
+== SVN ==
 
+* 从SVN版安装：*
 
-  1. tar zxvf iptux-0.x.x.tar.gz
+* Build from SVN codes:*
 
-  2. cd iptux-0.x.x
+{{{
+$ svn checkout http://iptux.googlecode.com/svn/trunk/ iptux-read-only
 
-  3. ./configure
+$ mkdir iptux-make
 
-  4. make 
+$ cd iptux-make
 
-  5. sudo make install
+$ ../iptux-read-only/configure
+
+$ make
+
+$ sudo make install
+}}}
+
+== Stable ==
+
+* 稳定版安装：*
+
+* Build from stable codes:*
+
+注意版本号：
+Note for the version numbers:
+
+{{{
+$ wget http://iptux.googlecode.com/files/iptux-0.x.x.tar.gz
+
+$ tar xzvf iptux-0.x.x.tar.gz
+
+$ cd iptux-0.x.x
+
+$ ./configure
+
+$ make
+
+$ sudo make install
+}}}
