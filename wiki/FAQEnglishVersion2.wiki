@@ -16,11 +16,10 @@ I'm sure you're one of our old users or at least have one of the old version of 
 
 rm -rfv ~/.cache/iptux
 
-==## Note the following item have faults, since there is no "Tool->Preferences->Sound" option. Need to be corrected.==
 
 ==4.While playing music or video, iptux won't respond when receiving messages or transferring files.==
 
-Please check if your audio system support multi-audio stream. If not, please cancel the sound service support in "Tool->Preferences->Sound".
+Please check if your audio system support multi-audio stream. If not, please disable the sound support in "Tool->Preferences->Sound".
 
 ==5. Where did iptux hide the configuration files?==
 
