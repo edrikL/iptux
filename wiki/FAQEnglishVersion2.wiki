@@ -1,45 +1,50 @@
 #labels FAQ,English,version2
-FAQ For iptux (English version 2)
-1. iptux failed to detect or connect to other clients.
+=FAQ For iptux (English version 2)=
+
+==1. iptux failed to detect or connect to other clients.==
 
 Be sure you didn't have your system firewall block your TCP/UDP port 2425, which iptux uses.
 In some networks, your administrator may set some rules to the switcher filtering broadcast frames in the concern of security. This may lead iptux fail to find other clients. You may try going to "Tools->Preferences->System" and adding the IP section where your pal's IP address is. Then refresh or restart the program. If this doesn't work you may try adding your pal's IP by "File->Detect". He or she should appear in your buddy list.
 
-2. I can receive files but cannot send them. Any bugs?
+==2. I can receive files but cannot send them. Any bugs?==
 
 First you should make sure your pal CAN receive files. Then check if you block the TCP/2425 port in your firewall settings. Be sure to enable it. If all these don't work, please report a bug to us.
 
-3. I can't modify the settings of iptux. iptux crashed when applying the Setting dialog.
+==3. I can't modify the settings of iptux. iptux crashed when applying the Setting dialog.==
 
 I'm sure you're one of our old users or at least have one of the old version of iptux run in your system, which had left something dirty things behind in ~/.cache/iptux. This should work magically:
 
 rm -rfv ~/.cache/iptux
 
-## Note the following item have faults, since there is no "Tool->Preferences->Sound" option. Need to be corrected.
-4.While playing music or video, iptux won't respond when receiving messages or transferring files.
+==## Note the following item have faults, since there is no "Tool->Preferences->Sound" option. Need to be corrected.==
+
+==4.While playing music or video, iptux won't respond when receiving messages or transferring files.==
 
 Please check if your audio system support multi-audio stream. If not, please cancel the sound service support in "Tool->Preferences->Sound".
 
-5. Where did iptux hide the configuration files?
+==5. Where did iptux hide the configuration files?==
 
 They are either in "~/.cache/iptux/", "~/.config/iptux/", or "~/.gconf/apps/iptux/". And you can feel free to remove the log file if you want.
 
-6. Is it right that iptux can only send simple text messages and transfer files?
+==6. Is it right that iptux can only send simple text messages and transfer files?==
 
 No, much more than that. You can add pictures, send group messages, transfer file folders and share your file.
 
-7. Error occurred while compiling iptux...
+==7. Error occurred while compiling iptux...==
 
 Please send the error message to issues section or mail to the author. (Mail to iptux@googlegroups.com is ok too.) If you can solve the problem and would like to make a patch for iptux, we will be very appreciated.
 
-8. Why is iptux not in my software source?
+==8. Why is iptux not in my software source?==
 
 To enter the software sources of big Linux distros, iptux needs advertising and spreading more. We hope you can help. :)
 
-9. Why can't iptux do *foo* things?
+==9. Why can't iptux do _foo_ things?==
 
 It's true that iptux still cannot do a lot of things. Make your idea known on the issue section of google code and check for the reply. Maybe iptux support the function and you just didn't find it. 
 
-## This is translated by me(alickee). I should thank the authors of some earlier version's FAQ, both the Chinese and English edition. In fact some paragraph are just taken from the FAQ(en) and modified a little.
+
+## This is translated by me(alickee). I should thank the authors of earlier version's FAQ, both the Chinese and English edition. In fact some paragraph are just taken from the FAQ(en) and modified a little.
+
 ## If you find any mistakes or misunderstandings, please let me know.
+
 ## Oct. 29, 2009
