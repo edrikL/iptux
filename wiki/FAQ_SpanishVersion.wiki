@@ -1,0 +1,44 @@
+=Preguntas Mas Frecuentes=
+
+== 1. Iptux falla en detectar o conectar a otros clientes. ==
+
+Asegurese de que el cortafuegos de su sistema no bloquee el puerto TCP/UDP 2425, que es el que usa iptux.
+
+En algunas redes, el administrador puede poner algunas reglas a los switches para filtrar los paquetes de difusión(brodcast)
+al respecto de la seguridad.
+Esto puede provocar que iptux falle al detectar otros clientes.
+Puede intentar agregar las direcciones IP de sus amigos dede Archivo->Detectar.
+El o ella debería aparecer en el listado de amigos.
+
+== 2.Iptux se cierra inesperadamente cuando se presiona Aplicar en el diálogo de Preferencias. ==
+
+Estoy seguro de que ud. es uno de los viejos usuarios o al menos tiene una versión antigua de iptux
+ejecutando en tu sistema que ha dejado algo sucio en ~/.cache/iptux. Esto debería funcionar mágicamente:
+
+{{{rm -rfv ~/.cache/iptux}}}
+
+== 3.Iptux deja de funcionar cuando recibe un mensaje, finalizada la transferencia de archivos... ==
+
+Éste error es relacionado a un problema de sonido.
+Quizás ud. está escuchando un Mp3 usando mplay, mpg123 etc. Problamblemente pueda ocupar el hardware de sonido exclusivamente.
+
+La mejor soucion es deshabilitar la reproduccion de sonido de iptux
+desmarcando Herramientas->Preferencias->Sonido->Soporte de Sonido.
+O puede resolver el problema de sonido que es llamado "Mixing Stream"
+
+== 4. Where did iptux hide my files? ==
+
+mhmm...Iptux por defecto guarda todos los archivos recibidosen el directorio personal del usuario (HOME).
+Pero si su amigo envia una imagen insertada en la ventana de mensajes,
+será guardado en ~/.cache/iptux/pic.
+Y sus avatares personalizados en ~/.cache/iptux/icon y ~/.cache/iptux/ads.
+
+Iptux tambien guarda los archivos de sucesos (logs) en ~/.config/iptux,
+Si ud, quieren borrarlos, por favor asegurese también de limpiar ~/.gconf/apps/iptux juntos en caso de que algo vaya mal.
+
+== 5. Iptux falla al compilar... ==
+
+Felicitaciones para mi porque un nuevo problema fue encontrado!!!
+Por favor, envienos un correo electrónico pegando el texto todo el detalle del error.
+Nuestra lista de correo es: iptux@googlegroups.com
+
