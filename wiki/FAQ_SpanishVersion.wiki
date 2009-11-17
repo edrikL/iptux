@@ -1,3 +1,4 @@
+#labels FAQ,Spanish
 =Preguntas Mas Frecuentes=
 
 == 1. Iptux falla en detectar o conectar a otros clientes. ==
@@ -41,4 +42,3 @@ Si ud, quieren borrarlos, por favor asegurese también de limpiar ~/.gconf/apps/
 Felicitaciones para mi porque un nuevo problema fue encontrado!!!
 Por favor, envienos un correo electrónico pegando el texto todo el detalle del error.
 Nuestra lista de correo es: iptux@googlegroups.com
-
