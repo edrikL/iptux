@@ -1,5 +1,6 @@
-#summary One-sentence summary of this page.
 #labels Phase-Design
+# 需要改进到地方到列表
+
 这篇存放一下对IPTUX需要改进到地方到列表，也会把一些Issue里面到建议放到这里。
 放在这里到原因，是因为这里似乎更容易访问一些，而且google group那里不能维护TODO信息的版本。出现问题到时候不能回滚（比如丢失等）。这里wiki用svn维护，就要好很多。
 
