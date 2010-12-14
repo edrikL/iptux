@@ -27,7 +27,7 @@ La mejor soucion es deshabilitar la reproduccion de sonido de iptux
 desmarcando Herramientas->Preferencias->Sonido->Soporte de Sonido.
 O puede resolver el problema de sonido que es llamado "Mixing Stream"
 
-== 4. Where did iptux hide my files? ==
+== 4. Dónde oculta mis archivos iptux? ==
 
 mhmm...Iptux por defecto guarda todos los archivos recibidosen el directorio personal del usuario (HOME).
 Pero si su amigo envia una imagen insertada en la ventana de mensajes,
