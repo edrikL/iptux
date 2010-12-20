@@ -1,0 +1,38 @@
+#labels Phase-QA, translate,localize, traduccion,documentacion
+
+= Introducción =
+
+Para traduccir la aplicacion es necesario bajarse el archivo de template _iptux.pot_ desde el
+directorio _po_ del repositorio.
+
+= Traducción de la documentación =
+
+Para traducir el wiki del proyecto, estamos armando un directorio por idioma
+manteniendo los mismo nombres de los archivos en cada uno respectivamente.
+Esta es la forma en que el wiki de google code funciona para poder localizar las paginas.
+
+ejemplo:
+
+{{{
+-- es
+    -- FAQ.wiki
+    -- install.wiki
+    -- translation.wiki
+-- en
+    -- FAQ.wiki
+    -- install.wiki
+    -- translation.wiki
+-- br-pt
+    -- FAQ.wiki
+    -- install.wiki
+    -- translation.wiki
+FAQ.wiki
+install.wiki
+translation.wiki
+
+}}}
+
+En la traduccion al español se encuentran trabajando:
+
+  * Fernando Toledo (docksudbbs@gmail.com)
+  * (por favor, agrega tu nombre)
