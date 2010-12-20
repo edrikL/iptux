@@ -1,0 +1,40 @@
+#labels Instalar, Desarrollo
+= Introducción =
+
+Construir e instalar Iptux
+
+== SVN ==
+
+* Construir el código desde el repository SVN:*
+
+{{{
+$ svn checkout http://iptux.googlecode.com/svn/trunk/ iptux-read-only
+
+$ mkdir iptux-make
+
+$ cd iptux-make
+
+$ ../iptux-read-only/configure
+
+$ make
+
+$ sudo make install
+}}}
+
+== Versión estable ==
+
+Note los números de versión:
+
+{{{
+$ wget http://iptux.googlecode.com/files/iptux-0.x.x.tar.gz
+
+$ tar xzvf iptux-0.x.x.tar.gz
+
+$ cd iptux-0.x.x
+
+$ ./configure
+
+$ make
+
+$ sudo make install
+}}}
