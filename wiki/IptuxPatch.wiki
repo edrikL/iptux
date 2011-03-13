@@ -1,0 +1,340 @@
+#我针对iptux-0.5.1-2做的补丁，功能如下:
+#1）可选弹出置顶提示按钮（类似飞鸽的弹出）
+#2) 去除收到群发信息后，可能误发群信息的不当设置
+#3）默认以组的方式显示列表（局域网多组的很好用了）
+#iptux-0.5.1.patch
+
+--- src/UdpData.cpp	2011-03-12 10:38:46.000000000 +0800
++++ src/UdpData.cpp	2011-03-13 10:27:44.000000000 +0800
+@@ -311,15 +311,15 @@
+ 	text = ipmsg_get_attach(buf, ':', 5);
+ 	if (text && *text != '\0') {
+ 		/*/* 插入消息 */
+-		if ((commandno & IPMSG_BROADCASTOPT) || (commandno & IPMSG_MULTICASTOPT))
+-			InsertMessage(pal, BROADCAST_TYPE, text);
+-		else
++		//if ((commandno & IPMSG_BROADCASTOPT) || (commandno & IPMSG_MULTICASTOPT))
++		//	InsertMessage(pal, BROADCAST_TYPE, text);
++		//else
+ 			InsertMessage(pal, REGULAR_TYPE, text);
+ 		/*/* 注册消息 */
+ 		pthread_mutex_lock(cthrd.GetMutex());
+-		if ((commandno & IPMSG_BROADCASTOPT) || (commandno & IPMSG_MULTICASTOPT))
+-			grpinf = cthrd.GetPalBroadcastItem(pal);
+-		else
++		//if ((commandno & IPMSG_BROADCASTOPT) || (commandno & IPMSG_MULTICASTOPT))
++		//	grpinf = cthrd.GetPalBroadcastItem(pal);
++		//else
+ 			grpinf = cthrd.GetPalRegularItem(pal);
+ 		if (!grpinf->dialog && !cthrd.MsglineContainItem(grpinf))
+ 			cthrd.PushItemToMsgline(grpinf);
+--- src/DataSettings.cpp	2009-11-20 17:12:15.000000000 +0800
++++ src/DataSettings.cpp	2009-12-24 23:47:18.000000000 +0800
+@@ -305,6 +305,11 @@
+ 	gtk_box_pack_start(GTK_BOX(hbox), widget, TRUE, TRUE, 0);
+ 	g_datalist_set_data(&widset, "font-chooser-widget", widget);
+ 
++	/* 消息到来后弹出窗口提示 */
++	widget = gtk_check_button_new_with_label(
++			 _("Pop windows while recved message"));
++	gtk_box_pack_start(GTK_BOX(box), widget, FALSE, FALSE, 0);
++	g_datalist_set_data(&widset, "popmsg-check-widget", widget);
+ 	/* 隐藏面板，只显示状态图标 */
+ 	widget = gtk_check_button_new_with_label(
+ 			 _("Automatically hide the panel after login"));
+@@ -546,6 +551,9 @@
+ 	gtk_combo_box_set_active(GTK_COMBO_BOX(widget), active);
+ 	widget = GTK_WIDGET(g_datalist_get_data(&widset, "font-chooser-widget"));
+ 	gtk_font_button_set_font_name(GTK_FONT_BUTTON(widget), progdt.font);
++	widget = GTK_WIDGET(g_datalist_get_data(&widset, "popmsg-check-widget"));
++	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(widget),
++				 FLAG_ISSET(progdt.flags, 7));
+ 	widget = GTK_WIDGET(g_datalist_get_data(&widset, "statusicon-check-widget"));
+ 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(widget),
+ 				 FLAG_ISSET(progdt.flags, 6));
+@@ -1005,6 +1013,11 @@
+ 	g_free(progdt.font);
+ 	progdt.font = g_strdup(gtk_font_button_get_font_name(GTK_FONT_BUTTON(widget)));
+ 
++	widget = GTK_WIDGET(g_datalist_get_data(&widset, "popmsg-check-widget"));
++	if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget)))
++		FLAG_SET(progdt.flags, 7);
++	else
++		FLAG_CLR(progdt.flags, 7);
+ 	widget = GTK_WIDGET(g_datalist_get_data(&widset, "statusicon-check-widget"));
+ 	if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget)))
+ 		FLAG_SET(progdt.flags, 6);
+--- src/MainWindow.cpp	2009-11-20 17:12:15.000000000 +0800
++++ src/MainWindow.cpp	2009-12-25 08:20:56.000000000 +0800
+@@ -23,6 +23,7 @@
+ #include "callback.h"
+ #include "support.h"
+ #include "utils.h"
++#include "output.h"
+ extern ProgramData progdt;
+ extern CoreThread cthrd;
+ extern MainWindow mwin;
+@@ -739,7 +740,7 @@
+ 	gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(sw),
+ 						 GTK_SHADOW_ETCHED_IN);
+ 
+-	model = GTK_TREE_MODEL(g_datalist_get_data(&mdlset, "regular-paltree-model"));
++	model = GTK_TREE_MODEL(g_datalist_get_data(&mdlset, "group-paltree-model"));
+ 	widget = CreatePaltreeTree(model);
+ 	g_object_set_data(G_OBJECT(widget), "paltree-model", model);
+ 	gtk_container_add(GTK_CONTAINER(sw), widget);
+@@ -1479,6 +1480,7 @@
+ 	GdkColor *color;
+ 
+ 	if (blinking) {
++		if (progdt.flags&0x80 && !IsMessageShow){IsMessageShow=TRUE;pop_info1(NULL, _("Some one said you"));}
+ 		gtk_tree_model_get(model, iter, 5, &color, -1);
+ 		if ((color->red == color1.red) && (color->green == color1.green)
+ 						 && (color->blue == color1.blue))
+@@ -1486,6 +1488,7 @@
+ 		else
+ 			gtk_tree_store_set(GTK_TREE_STORE(model),iter, 5, &color1, -1);
+ 	} else
++		IsMessageShow=FALSE;
+ 		gtk_tree_store_set(GTK_TREE_STORE(model), iter, 5, &color1, -1);
+ }
+ 
+--- src/MainWindow.h	2009-11-20 17:12:15.000000000 +0800
++++ src/MainWindow.h	2009-12-24 22:41:32.000000000 +0800
+@@ -84,6 +84,7 @@
+ 	GList *tmdllist;		//model链表，用于构建model循环结构
+ 	GtkAccelGroup *accel;	//快捷键集组
+ 	guint timerid;		//UI更新定时器ID
++	bool IsMessageShow;
+ private:
+ 	static GtkWidget *CreateTransPopupMenu(GtkTreeModel *model);
+ 	static GtkWidget *CreatePaltreePopupMenu(GroupInfo *grpinf);
+--- src/ProgramData.cpp	2009-11-20 17:12:15.000000000 +0800
++++ src/ProgramData.cpp	2009-12-24 23:05:52.000000000 +0800
+@@ -101,6 +101,8 @@
+ 	gconf_client_set_string(client, GCONF_PATH "/preference_encode", encode, NULL);
+ 	gconf_client_set_string(client, GCONF_PATH "/pal_icon", palicon, NULL);
+ 	gconf_client_set_string(client, GCONF_PATH "/panel_font", font, NULL);
++	gconf_client_set_bool(client, GCONF_PATH "/pop_msg",
++			 FLAG_ISSET(flags, 7) ? TRUE : FALSE, NULL);
+ 	gconf_client_set_bool(client, GCONF_PATH "/hide_startup",
+ 			 FLAG_ISSET(flags, 6) ? TRUE : FALSE, NULL);
+ 	gconf_client_set_bool(client, GCONF_PATH "/open_transmission",
+@@ -219,6 +221,8 @@
+ 		palicon = g_strdup("icon-qq.png");
+ 	if (!(font = gconf_client_get_string(client, GCONF_PATH "/panel_font", NULL)))
+ 		font = g_strdup("Sans Serif 10");
++	if (gconf_client_get_bool(client, GCONF_PATH "/pop_msg", NULL))
++		FLAG_SET(flags, 7);
+ 	if (gconf_client_get_bool(client, GCONF_PATH "/hide_startup", NULL))
+ 		FLAG_SET(flags, 6);
+ 	if (gconf_client_get_bool(client, GCONF_PATH "/open_transmission", NULL))
+@@ -495,6 +499,11 @@
+ 			g_free(progdt->font);
+ 			progdt->font = g_strdup(str);
+ 		}
++	} else if (strcmp(entry->key, GCONF_PATH "/pop_msg") == 0) {
++		if (gconf_value_get_bool(entry->value))
++			FLAG_SET(progdt->flags, 7);
++		else
++			FLAG_CLR(progdt->flags, 7);
+ 	} else if (strcmp(entry->key, GCONF_PATH "/hide_startup") == 0) {
+ 		if (gconf_value_get_bool(entry->value))
+ 			FLAG_SET(progdt->flags, 6);
+--- src/ProgramData.h	2009-11-20 17:12:15.000000000 +0800
++++ src/ProgramData.h	2009-12-24 23:42:36.000000000 +0800
+@@ -49,7 +49,7 @@
+ 	char *encode;		//默认通信编码 *
+ 	char *palicon;		//默认头像 *
+ 	char *font;		//面板字体 *
+-	uint8_t flags;		//6 图标,5 传输:4 enter:3 历史:2 日志:1 黑名单:0 共享
++	uint8_t flags;		//7 消息到来弹出提示: 6 图标,5 传输:4 enter:3 历史:2 日志:1 黑名单:0 共享
+ 
+ 	char *transtip;		//传输完成提示声音 *
+ 	char *msgtip;		//消息到来提示声音 *
+--- src/StatusIcon.h	2009-11-20 17:12:15.000000000 +0800
++++ src/StatusIcon.h	2009-12-24 22:55:42.000000000 +0800
+@@ -21,6 +21,7 @@
+ 
+ 	void CreateStatusIcon();
+ 	void AlterStatusIconMode();
++	static void StatusIconActivate();
+ private:
+ 	GtkStatusIcon *statusicon;
+ 	guint timerid;
+@@ -30,7 +31,6 @@
+ //回调处理部分
+ private:
+ 	static void ShowTransWindow();
+-	static void StatusIconActivate();
+ 	static void PopupWorkMenu(GtkStatusIcon *statusicon, guint button, guint time);
+ 	static gboolean StatusIconQueryTooltip(GtkStatusIcon *statusicon, gint x, gint y,
+ 						 gboolean key, GtkTooltip *tooltip);
+--- src/output.cpp	2009-11-20 17:12:15.000000000 +0800
++++ src/output.cpp	2009-12-24 22:56:52.000000000 +0800
+@@ -12,6 +12,41 @@
+ #include "output.h"
+ #include "sys.h"
+ 
++#include "StatusIcon.h"
++extern StatusIcon sicon;
++/**
++ * 无模式弹出消息提示.
++ * @param parent parent window
++ * @param format as in printf()
++ * @param ...
++ */
++void destroy( GtkWidget *widget, GtkWidget *parent ) {
++	sicon.StatusIconActivate();
++	gtk_widget_destroy(parent);
++	gtk_widget_destroy(widget);
++} 
++void pop_info1(GtkWidget *parent, const gchar *format, ...)
++{
++	GtkWidget *dialog,*button;
++	gchar *msg;
++	va_list ap;
++
++	va_start(ap, format);
++	msg = g_strdup_vprintf(format, ap);
++	va_end(ap);
++	dialog = gtk_dialog_new();
++	button = gtk_button_new_with_label(msg);
++	g_free(msg);
++	gtk_signal_connect (GTK_OBJECT (button), "clicked", GTK_SIGNAL_FUNC (destroy),dialog); 
++	gtk_container_add (GTK_CONTAINER (GTK_DIALOG(dialog)->vbox), button);
++	gtk_widget_show (button); 
++   
++	gtk_widget_show_all(dialog);  
++	gtk_window_set_keep_above(GTK_WINDOW(dialog),TRUE);
++//	gtk_dialog_run(GTK_DIALOG(dialog));
++//	gtk_widget_destroy(dialog);
++}
++
+ /**
+  * 弹出消息提示.
+  * @param parent parent window
+--- src/output.h	2009-11-20 17:12:15.000000000 +0800
++++ src/output.h	2009-12-24 21:00:02.000000000 +0800
+@@ -35,6 +35,7 @@
+ #define ptrace(format,...) printf(format,##__VA_ARGS__)
+ #endif
+ 
++void pop_info1(GtkWidget *parent, const gchar *format, ...);
+ void pop_info(GtkWidget *parent, const gchar *format, ...);
+ void pop_warning(GtkWidget *parent, const gchar *format, ...);
+ void pop_error(const gchar *format, ...);
+--- src/patch	1970-01-01 08:00:00.000000000 +0800
++++ src/patch	2010-09-15 07:55:50.000000000 +0800
+@@ -0,0 +1,111 @@
++DataSettings.cpp
++308,312d307
++< 	/* 消息到来后弹出窗口提示 */
++< 	widget = gtk_check_button_new_with_label(
++< 			 _("Pop windows while recved message"));
++< 	gtk_box_pack_start(GTK_BOX(box), widget, FALSE, FALSE, 0);
++< 	g_datalist_set_data(&widset, "popmsg-check-widget", widget);
++554,556d548
++< 	widget = GTK_WIDGET(g_datalist_get_data(&widset, "popmsg-check-widget"));
++< 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(widget),
++< 				 FLAG_ISSET(progdt.flags, 7));
++1016,1020d1007
++< 	widget = GTK_WIDGET(g_datalist_get_data(&widset, "popmsg-check-widget"));
++< 	if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget)))
++< 		FLAG_SET(progdt.flags, 7);
++< 	else
++< 		FLAG_CLR(progdt.flags, 7);
++
++
++
++MainWindow.cpp
++26d25
++< #include "output.h"
++743c742
++< 	model = GTK_TREE_MODEL(g_datalist_get_data(&mdlset, "group-paltree-model"));
++---
++> 	model = GTK_TREE_MODEL(g_datalist_get_data(&mdlset, "regular-paltree-model"));
++1483d1481
++< 		if (progdt.flags&0x80 && !IsMessageShow){IsMessageShow=TRUE;pop_info1(NULL, _("Some one said you"));}
++1491d1488
++< 		IsMessageShow=FALSE;
++
++
++
++ProgramData.cpp
++104,105d103
++< 	gconf_client_set_bool(client, GCONF_PATH "/pop_msg",
++< 			 FLAG_ISSET(flags, 7) ? TRUE : FALSE, NULL);
++224,225d221
++< 	if (gconf_client_get_bool(client, GCONF_PATH "/pop_msg", NULL))
++< 		FLAG_SET(flags, 7);
++502,506d497
++< 	} else if (strcmp(entry->key, GCONF_PATH "/pop_msg") == 0) {
++< 		if (gconf_value_get_bool(entry->value))
++< 			FLAG_SET(progdt->flags, 7);
++< 		else
++< 			FLAG_CLR(progdt->flags, 7);
++
++
++
++
++output.cpp
++15,48d14
++< #include "StatusIcon.h"
++< extern StatusIcon sicon;
++< /**
++<  * 无模式弹出消息提示.
++<  * @param parent parent window
++<  * @param format as in printf()
++<  * @param ...
++<  */
++< void destroy( GtkWidget *widget, GtkWidget *parent ) {
++< 	sicon.StatusIconActivate();
++< 	gtk_widget_destroy(parent);
++< 	gtk_widget_destroy(widget);
++< } 
++< void pop_info1(GtkWidget *parent, const gchar *format, ...)
++< {
++< 	GtkWidget *dialog,*button;
++< 	gchar *msg;
++< 	va_list ap;
++< 
++< 	va_start(ap, format);
++< 	msg = g_strdup_vprintf(format, ap);
++< 	va_end(ap);
++< 	dialog = gtk_dialog_new();
++< 	button = gtk_button_new_with_label(msg);
++< 	g_free(msg);
++< 	gtk_signal_connect (GTK_OBJECT (button), "clicked", GTK_SIGNAL_FUNC (destroy),dialog); 
++< 	gtk_container_add (GTK_CONTAINER (GTK_DIALOG(dialog)->vbox), button);
++< 	gtk_widget_show (button); 
++<    
++< 	gtk_widget_show_all(dialog);  
++< //	gtk_dialog_run(GTK_DIALOG(dialog));
++< //	gtk_widget_destroy(dialog);
++< }
++< 
++
++
++MainWindow.h
++87d86
++< 	bool IsMessageShow;
++
++
++ProgramData.h
++52c52
++< 	uint8_t flags;		//7 消息到来弹出提示: 6 图标,5 传输:4 enter:3 历史:2 日志:1 黑名单:0 共享
++---
++> 	uint8_t flags;		//6 图标,5 传输:4 enter:3 历史:2 日志:1 黑名单:0 共享
++
++
++StatusIcon.h
++24d23
++< 	static void StatusIconActivate();
++33a33
++> 	static void StatusIconActivate();
++
++
++output.h
++38d37
++< void pop_info1(GtkWidget *parent, const gchar *format, ...);
