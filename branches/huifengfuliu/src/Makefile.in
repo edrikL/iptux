@@ -47,17 +47,21 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-am_iptux_OBJECTS = AnalogFS.$(OBJEXT) Command.$(OBJEXT) \
-	CoreThread.$(OBJEXT) DataSettings.$(OBJEXT) \
-	DetectPal.$(OBJEXT) DialogBase.$(OBJEXT) DialogGroup.$(OBJEXT) \
-	DialogPeer.$(OBJEXT) HelpDialog.$(OBJEXT) LogSystem.$(OBJEXT) \
-	MainWindow.$(OBJEXT) ProgramData.$(OBJEXT) RecvFile.$(OBJEXT) \
-	RecvFileData.$(OBJEXT) RevisePal.$(OBJEXT) SendFile.$(OBJEXT) \
-	SendFileData.$(OBJEXT) ShareFile.$(OBJEXT) \
-	SoundSystem.$(OBJEXT) StatusIcon.$(OBJEXT) TcpData.$(OBJEXT) \
-	UdpData.$(OBJEXT) callback.$(OBJEXT) dialog.$(OBJEXT) \
-	iptux.$(OBJEXT) mess.$(OBJEXT) output.$(OBJEXT) \
-	support.$(OBJEXT) utils.$(OBJEXT) wrapper.$(OBJEXT)
+am_iptux_OBJECTS = iptux-AnalogFS.$(OBJEXT) iptux-Command.$(OBJEXT) \
+	iptux-CoreThread.$(OBJEXT) iptux-DataSettings.$(OBJEXT) \
+	iptux-DetectPal.$(OBJEXT) iptux-DialogBase.$(OBJEXT) \
+	iptux-DialogGroup.$(OBJEXT) iptux-DialogPeer.$(OBJEXT) \
+	iptux-HelpDialog.$(OBJEXT) iptux-LogSystem.$(OBJEXT) \
+	iptux-MainWindow.$(OBJEXT) iptux-ProgramData.$(OBJEXT) \
+	iptux-RecvFile.$(OBJEXT) iptux-RecvFileData.$(OBJEXT) \
+	iptux-RevisePal.$(OBJEXT) iptux-SendFile.$(OBJEXT) \
+	iptux-SendFileData.$(OBJEXT) iptux-ShareFile.$(OBJEXT) \
+	iptux-SoundSystem.$(OBJEXT) iptux-StatusIcon.$(OBJEXT) \
+	iptux-TcpData.$(OBJEXT) iptux-UdpData.$(OBJEXT) \
+	iptux-callback.$(OBJEXT) iptux-dialog.$(OBJEXT) \
+	iptux-iptux.$(OBJEXT) iptux-mess.$(OBJEXT) \
+	iptux-output.$(OBJEXT) iptux-support.$(OBJEXT) \
+	iptux-utils.$(OBJEXT) iptux-wrapper.$(OBJEXT)
 iptux_OBJECTS = $(am_iptux_OBJECTS)
 iptux_LDADD = $(LDADD)
 iptux_LINK = $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(iptux_LDFLAGS) \
@@ -140,9 +144,9 @@ ECHO_N = @ECHO_N@
 ECHO_T = @ECHO_T@
 EGREP = @EGREP@
 EXEEXT = @EXEEXT@
-GCONF_CFLAGS = @GCONF_CFLAGS@
-GCONF_LIBS = @GCONF_LIBS@
 GETTEXT_PACKAGE = @GETTEXT_PACKAGE@
+GIO_CFLAGS = @GIO_CFLAGS@
+GIO_LIBS = @GIO_LIBS@
 GLIB_CFLAGS = @GLIB_CFLAGS@
 GLIB_LIBS = @GLIB_LIBS@
 GMOFILES = @GMOFILES@
@@ -253,7 +257,7 @@ iptux_SOURCES = AnalogFS.cpp Command.cpp CoreThread.cpp DataSettings.cpp \
 AM_CXXFLAGS = -Wall
 
 # set the include path found by configure
-INCLUDES = $(all_includes) @PACKAGE_CFLAGS@
+iptux_CPPFLAGS = $(all_includes) @PACKAGE_CFLAGS@
 
 # the library search path.
 iptux_LDFLAGS = $(all_libraries) @PACKAGE_LIBS@
@@ -345,36 +349,36 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/AnalogFS.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Command.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/CoreThread.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/DataSettings.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/DetectPal.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/DialogBase.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/DialogGroup.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/DialogPeer.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/HelpDialog.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/LogSystem.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/MainWindow.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ProgramData.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/RecvFile.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/RecvFileData.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/RevisePal.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/SendFile.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/SendFileData.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ShareFile.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/SoundSystem.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/StatusIcon.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/TcpData.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/UdpData.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/callback.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dialog.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/iptux.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mess.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/output.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/support.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/utils.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/wrapper.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/iptux-AnalogFS.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/iptux-Command.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/iptux-CoreThread.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/iptux-DataSettings.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/iptux-DetectPal.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/iptux-DialogBase.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/iptux-DialogGroup.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/iptux-DialogPeer.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/iptux-HelpDialog.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/iptux-LogSystem.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/iptux-MainWindow.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/iptux-ProgramData.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/iptux-RecvFile.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/iptux-RecvFileData.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/iptux-RevisePal.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/iptux-SendFile.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/iptux-SendFileData.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/iptux-ShareFile.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/iptux-SoundSystem.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/iptux-StatusIcon.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/iptux-TcpData.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/iptux-UdpData.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/iptux-callback.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/iptux-dialog.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/iptux-iptux.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/iptux-mess.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/iptux-output.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/iptux-support.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/iptux-utils.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/iptux-wrapper.Po@am__quote@
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -389,6 +393,426 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXXCOMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
+
+iptux-AnalogFS.o: AnalogFS.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT iptux-AnalogFS.o -MD -MP -MF $(DEPDIR)/iptux-AnalogFS.Tpo -c -o iptux-AnalogFS.o `test -f 'AnalogFS.cpp' || echo '$(srcdir)/'`AnalogFS.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/iptux-AnalogFS.Tpo $(DEPDIR)/iptux-AnalogFS.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='AnalogFS.cpp' object='iptux-AnalogFS.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o iptux-AnalogFS.o `test -f 'AnalogFS.cpp' || echo '$(srcdir)/'`AnalogFS.cpp
+
+iptux-AnalogFS.obj: AnalogFS.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT iptux-AnalogFS.obj -MD -MP -MF $(DEPDIR)/iptux-AnalogFS.Tpo -c -o iptux-AnalogFS.obj `if test -f 'AnalogFS.cpp'; then $(CYGPATH_W) 'AnalogFS.cpp'; else $(CYGPATH_W) '$(srcdir)/AnalogFS.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/iptux-AnalogFS.Tpo $(DEPDIR)/iptux-AnalogFS.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='AnalogFS.cpp' object='iptux-AnalogFS.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o iptux-AnalogFS.obj `if test -f 'AnalogFS.cpp'; then $(CYGPATH_W) 'AnalogFS.cpp'; else $(CYGPATH_W) '$(srcdir)/AnalogFS.cpp'; fi`
+
+iptux-Command.o: Command.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT iptux-Command.o -MD -MP -MF $(DEPDIR)/iptux-Command.Tpo -c -o iptux-Command.o `test -f 'Command.cpp' || echo '$(srcdir)/'`Command.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/iptux-Command.Tpo $(DEPDIR)/iptux-Command.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Command.cpp' object='iptux-Command.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o iptux-Command.o `test -f 'Command.cpp' || echo '$(srcdir)/'`Command.cpp
+
+iptux-Command.obj: Command.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT iptux-Command.obj -MD -MP -MF $(DEPDIR)/iptux-Command.Tpo -c -o iptux-Command.obj `if test -f 'Command.cpp'; then $(CYGPATH_W) 'Command.cpp'; else $(CYGPATH_W) '$(srcdir)/Command.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/iptux-Command.Tpo $(DEPDIR)/iptux-Command.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Command.cpp' object='iptux-Command.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o iptux-Command.obj `if test -f 'Command.cpp'; then $(CYGPATH_W) 'Command.cpp'; else $(CYGPATH_W) '$(srcdir)/Command.cpp'; fi`
+
+iptux-CoreThread.o: CoreThread.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT iptux-CoreThread.o -MD -MP -MF $(DEPDIR)/iptux-CoreThread.Tpo -c -o iptux-CoreThread.o `test -f 'CoreThread.cpp' || echo '$(srcdir)/'`CoreThread.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/iptux-CoreThread.Tpo $(DEPDIR)/iptux-CoreThread.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='CoreThread.cpp' object='iptux-CoreThread.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o iptux-CoreThread.o `test -f 'CoreThread.cpp' || echo '$(srcdir)/'`CoreThread.cpp
+
+iptux-CoreThread.obj: CoreThread.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT iptux-CoreThread.obj -MD -MP -MF $(DEPDIR)/iptux-CoreThread.Tpo -c -o iptux-CoreThread.obj `if test -f 'CoreThread.cpp'; then $(CYGPATH_W) 'CoreThread.cpp'; else $(CYGPATH_W) '$(srcdir)/CoreThread.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/iptux-CoreThread.Tpo $(DEPDIR)/iptux-CoreThread.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='CoreThread.cpp' object='iptux-CoreThread.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o iptux-CoreThread.obj `if test -f 'CoreThread.cpp'; then $(CYGPATH_W) 'CoreThread.cpp'; else $(CYGPATH_W) '$(srcdir)/CoreThread.cpp'; fi`
+
+iptux-DataSettings.o: DataSettings.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT iptux-DataSettings.o -MD -MP -MF $(DEPDIR)/iptux-DataSettings.Tpo -c -o iptux-DataSettings.o `test -f 'DataSettings.cpp' || echo '$(srcdir)/'`DataSettings.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/iptux-DataSettings.Tpo $(DEPDIR)/iptux-DataSettings.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='DataSettings.cpp' object='iptux-DataSettings.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o iptux-DataSettings.o `test -f 'DataSettings.cpp' || echo '$(srcdir)/'`DataSettings.cpp
+
+iptux-DataSettings.obj: DataSettings.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT iptux-DataSettings.obj -MD -MP -MF $(DEPDIR)/iptux-DataSettings.Tpo -c -o iptux-DataSettings.obj `if test -f 'DataSettings.cpp'; then $(CYGPATH_W) 'DataSettings.cpp'; else $(CYGPATH_W) '$(srcdir)/DataSettings.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/iptux-DataSettings.Tpo $(DEPDIR)/iptux-DataSettings.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='DataSettings.cpp' object='iptux-DataSettings.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o iptux-DataSettings.obj `if test -f 'DataSettings.cpp'; then $(CYGPATH_W) 'DataSettings.cpp'; else $(CYGPATH_W) '$(srcdir)/DataSettings.cpp'; fi`
+
+iptux-DetectPal.o: DetectPal.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT iptux-DetectPal.o -MD -MP -MF $(DEPDIR)/iptux-DetectPal.Tpo -c -o iptux-DetectPal.o `test -f 'DetectPal.cpp' || echo '$(srcdir)/'`DetectPal.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/iptux-DetectPal.Tpo $(DEPDIR)/iptux-DetectPal.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='DetectPal.cpp' object='iptux-DetectPal.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o iptux-DetectPal.o `test -f 'DetectPal.cpp' || echo '$(srcdir)/'`DetectPal.cpp
+
+iptux-DetectPal.obj: DetectPal.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT iptux-DetectPal.obj -MD -MP -MF $(DEPDIR)/iptux-DetectPal.Tpo -c -o iptux-DetectPal.obj `if test -f 'DetectPal.cpp'; then $(CYGPATH_W) 'DetectPal.cpp'; else $(CYGPATH_W) '$(srcdir)/DetectPal.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/iptux-DetectPal.Tpo $(DEPDIR)/iptux-DetectPal.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='DetectPal.cpp' object='iptux-DetectPal.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o iptux-DetectPal.obj `if test -f 'DetectPal.cpp'; then $(CYGPATH_W) 'DetectPal.cpp'; else $(CYGPATH_W) '$(srcdir)/DetectPal.cpp'; fi`
+
+iptux-DialogBase.o: DialogBase.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT iptux-DialogBase.o -MD -MP -MF $(DEPDIR)/iptux-DialogBase.Tpo -c -o iptux-DialogBase.o `test -f 'DialogBase.cpp' || echo '$(srcdir)/'`DialogBase.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/iptux-DialogBase.Tpo $(DEPDIR)/iptux-DialogBase.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='DialogBase.cpp' object='iptux-DialogBase.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o iptux-DialogBase.o `test -f 'DialogBase.cpp' || echo '$(srcdir)/'`DialogBase.cpp
+
+iptux-DialogBase.obj: DialogBase.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT iptux-DialogBase.obj -MD -MP -MF $(DEPDIR)/iptux-DialogBase.Tpo -c -o iptux-DialogBase.obj `if test -f 'DialogBase.cpp'; then $(CYGPATH_W) 'DialogBase.cpp'; else $(CYGPATH_W) '$(srcdir)/DialogBase.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/iptux-DialogBase.Tpo $(DEPDIR)/iptux-DialogBase.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='DialogBase.cpp' object='iptux-DialogBase.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o iptux-DialogBase.obj `if test -f 'DialogBase.cpp'; then $(CYGPATH_W) 'DialogBase.cpp'; else $(CYGPATH_W) '$(srcdir)/DialogBase.cpp'; fi`
+
+iptux-DialogGroup.o: DialogGroup.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT iptux-DialogGroup.o -MD -MP -MF $(DEPDIR)/iptux-DialogGroup.Tpo -c -o iptux-DialogGroup.o `test -f 'DialogGroup.cpp' || echo '$(srcdir)/'`DialogGroup.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/iptux-DialogGroup.Tpo $(DEPDIR)/iptux-DialogGroup.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='DialogGroup.cpp' object='iptux-DialogGroup.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o iptux-DialogGroup.o `test -f 'DialogGroup.cpp' || echo '$(srcdir)/'`DialogGroup.cpp
+
+iptux-DialogGroup.obj: DialogGroup.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT iptux-DialogGroup.obj -MD -MP -MF $(DEPDIR)/iptux-DialogGroup.Tpo -c -o iptux-DialogGroup.obj `if test -f 'DialogGroup.cpp'; then $(CYGPATH_W) 'DialogGroup.cpp'; else $(CYGPATH_W) '$(srcdir)/DialogGroup.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/iptux-DialogGroup.Tpo $(DEPDIR)/iptux-DialogGroup.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='DialogGroup.cpp' object='iptux-DialogGroup.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o iptux-DialogGroup.obj `if test -f 'DialogGroup.cpp'; then $(CYGPATH_W) 'DialogGroup.cpp'; else $(CYGPATH_W) '$(srcdir)/DialogGroup.cpp'; fi`
+
+iptux-DialogPeer.o: DialogPeer.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT iptux-DialogPeer.o -MD -MP -MF $(DEPDIR)/iptux-DialogPeer.Tpo -c -o iptux-DialogPeer.o `test -f 'DialogPeer.cpp' || echo '$(srcdir)/'`DialogPeer.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/iptux-DialogPeer.Tpo $(DEPDIR)/iptux-DialogPeer.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='DialogPeer.cpp' object='iptux-DialogPeer.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o iptux-DialogPeer.o `test -f 'DialogPeer.cpp' || echo '$(srcdir)/'`DialogPeer.cpp
+
+iptux-DialogPeer.obj: DialogPeer.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT iptux-DialogPeer.obj -MD -MP -MF $(DEPDIR)/iptux-DialogPeer.Tpo -c -o iptux-DialogPeer.obj `if test -f 'DialogPeer.cpp'; then $(CYGPATH_W) 'DialogPeer.cpp'; else $(CYGPATH_W) '$(srcdir)/DialogPeer.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/iptux-DialogPeer.Tpo $(DEPDIR)/iptux-DialogPeer.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='DialogPeer.cpp' object='iptux-DialogPeer.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o iptux-DialogPeer.obj `if test -f 'DialogPeer.cpp'; then $(CYGPATH_W) 'DialogPeer.cpp'; else $(CYGPATH_W) '$(srcdir)/DialogPeer.cpp'; fi`
+
+iptux-HelpDialog.o: HelpDialog.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT iptux-HelpDialog.o -MD -MP -MF $(DEPDIR)/iptux-HelpDialog.Tpo -c -o iptux-HelpDialog.o `test -f 'HelpDialog.cpp' || echo '$(srcdir)/'`HelpDialog.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/iptux-HelpDialog.Tpo $(DEPDIR)/iptux-HelpDialog.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='HelpDialog.cpp' object='iptux-HelpDialog.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o iptux-HelpDialog.o `test -f 'HelpDialog.cpp' || echo '$(srcdir)/'`HelpDialog.cpp
+
+iptux-HelpDialog.obj: HelpDialog.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT iptux-HelpDialog.obj -MD -MP -MF $(DEPDIR)/iptux-HelpDialog.Tpo -c -o iptux-HelpDialog.obj `if test -f 'HelpDialog.cpp'; then $(CYGPATH_W) 'HelpDialog.cpp'; else $(CYGPATH_W) '$(srcdir)/HelpDialog.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/iptux-HelpDialog.Tpo $(DEPDIR)/iptux-HelpDialog.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='HelpDialog.cpp' object='iptux-HelpDialog.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o iptux-HelpDialog.obj `if test -f 'HelpDialog.cpp'; then $(CYGPATH_W) 'HelpDialog.cpp'; else $(CYGPATH_W) '$(srcdir)/HelpDialog.cpp'; fi`
+
+iptux-LogSystem.o: LogSystem.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT iptux-LogSystem.o -MD -MP -MF $(DEPDIR)/iptux-LogSystem.Tpo -c -o iptux-LogSystem.o `test -f 'LogSystem.cpp' || echo '$(srcdir)/'`LogSystem.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/iptux-LogSystem.Tpo $(DEPDIR)/iptux-LogSystem.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='LogSystem.cpp' object='iptux-LogSystem.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o iptux-LogSystem.o `test -f 'LogSystem.cpp' || echo '$(srcdir)/'`LogSystem.cpp
+
+iptux-LogSystem.obj: LogSystem.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT iptux-LogSystem.obj -MD -MP -MF $(DEPDIR)/iptux-LogSystem.Tpo -c -o iptux-LogSystem.obj `if test -f 'LogSystem.cpp'; then $(CYGPATH_W) 'LogSystem.cpp'; else $(CYGPATH_W) '$(srcdir)/LogSystem.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/iptux-LogSystem.Tpo $(DEPDIR)/iptux-LogSystem.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='LogSystem.cpp' object='iptux-LogSystem.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o iptux-LogSystem.obj `if test -f 'LogSystem.cpp'; then $(CYGPATH_W) 'LogSystem.cpp'; else $(CYGPATH_W) '$(srcdir)/LogSystem.cpp'; fi`
+
+iptux-MainWindow.o: MainWindow.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT iptux-MainWindow.o -MD -MP -MF $(DEPDIR)/iptux-MainWindow.Tpo -c -o iptux-MainWindow.o `test -f 'MainWindow.cpp' || echo '$(srcdir)/'`MainWindow.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/iptux-MainWindow.Tpo $(DEPDIR)/iptux-MainWindow.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='MainWindow.cpp' object='iptux-MainWindow.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o iptux-MainWindow.o `test -f 'MainWindow.cpp' || echo '$(srcdir)/'`MainWindow.cpp
+
+iptux-MainWindow.obj: MainWindow.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT iptux-MainWindow.obj -MD -MP -MF $(DEPDIR)/iptux-MainWindow.Tpo -c -o iptux-MainWindow.obj `if test -f 'MainWindow.cpp'; then $(CYGPATH_W) 'MainWindow.cpp'; else $(CYGPATH_W) '$(srcdir)/MainWindow.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/iptux-MainWindow.Tpo $(DEPDIR)/iptux-MainWindow.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='MainWindow.cpp' object='iptux-MainWindow.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o iptux-MainWindow.obj `if test -f 'MainWindow.cpp'; then $(CYGPATH_W) 'MainWindow.cpp'; else $(CYGPATH_W) '$(srcdir)/MainWindow.cpp'; fi`
+
+iptux-ProgramData.o: ProgramData.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT iptux-ProgramData.o -MD -MP -MF $(DEPDIR)/iptux-ProgramData.Tpo -c -o iptux-ProgramData.o `test -f 'ProgramData.cpp' || echo '$(srcdir)/'`ProgramData.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/iptux-ProgramData.Tpo $(DEPDIR)/iptux-ProgramData.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='ProgramData.cpp' object='iptux-ProgramData.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o iptux-ProgramData.o `test -f 'ProgramData.cpp' || echo '$(srcdir)/'`ProgramData.cpp
+
+iptux-ProgramData.obj: ProgramData.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT iptux-ProgramData.obj -MD -MP -MF $(DEPDIR)/iptux-ProgramData.Tpo -c -o iptux-ProgramData.obj `if test -f 'ProgramData.cpp'; then $(CYGPATH_W) 'ProgramData.cpp'; else $(CYGPATH_W) '$(srcdir)/ProgramData.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/iptux-ProgramData.Tpo $(DEPDIR)/iptux-ProgramData.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='ProgramData.cpp' object='iptux-ProgramData.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o iptux-ProgramData.obj `if test -f 'ProgramData.cpp'; then $(CYGPATH_W) 'ProgramData.cpp'; else $(CYGPATH_W) '$(srcdir)/ProgramData.cpp'; fi`
+
+iptux-RecvFile.o: RecvFile.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT iptux-RecvFile.o -MD -MP -MF $(DEPDIR)/iptux-RecvFile.Tpo -c -o iptux-RecvFile.o `test -f 'RecvFile.cpp' || echo '$(srcdir)/'`RecvFile.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/iptux-RecvFile.Tpo $(DEPDIR)/iptux-RecvFile.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='RecvFile.cpp' object='iptux-RecvFile.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o iptux-RecvFile.o `test -f 'RecvFile.cpp' || echo '$(srcdir)/'`RecvFile.cpp
+
+iptux-RecvFile.obj: RecvFile.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT iptux-RecvFile.obj -MD -MP -MF $(DEPDIR)/iptux-RecvFile.Tpo -c -o iptux-RecvFile.obj `if test -f 'RecvFile.cpp'; then $(CYGPATH_W) 'RecvFile.cpp'; else $(CYGPATH_W) '$(srcdir)/RecvFile.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/iptux-RecvFile.Tpo $(DEPDIR)/iptux-RecvFile.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='RecvFile.cpp' object='iptux-RecvFile.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o iptux-RecvFile.obj `if test -f 'RecvFile.cpp'; then $(CYGPATH_W) 'RecvFile.cpp'; else $(CYGPATH_W) '$(srcdir)/RecvFile.cpp'; fi`
+
+iptux-RecvFileData.o: RecvFileData.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT iptux-RecvFileData.o -MD -MP -MF $(DEPDIR)/iptux-RecvFileData.Tpo -c -o iptux-RecvFileData.o `test -f 'RecvFileData.cpp' || echo '$(srcdir)/'`RecvFileData.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/iptux-RecvFileData.Tpo $(DEPDIR)/iptux-RecvFileData.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='RecvFileData.cpp' object='iptux-RecvFileData.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o iptux-RecvFileData.o `test -f 'RecvFileData.cpp' || echo '$(srcdir)/'`RecvFileData.cpp
+
+iptux-RecvFileData.obj: RecvFileData.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT iptux-RecvFileData.obj -MD -MP -MF $(DEPDIR)/iptux-RecvFileData.Tpo -c -o iptux-RecvFileData.obj `if test -f 'RecvFileData.cpp'; then $(CYGPATH_W) 'RecvFileData.cpp'; else $(CYGPATH_W) '$(srcdir)/RecvFileData.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/iptux-RecvFileData.Tpo $(DEPDIR)/iptux-RecvFileData.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='RecvFileData.cpp' object='iptux-RecvFileData.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o iptux-RecvFileData.obj `if test -f 'RecvFileData.cpp'; then $(CYGPATH_W) 'RecvFileData.cpp'; else $(CYGPATH_W) '$(srcdir)/RecvFileData.cpp'; fi`
+
+iptux-RevisePal.o: RevisePal.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT iptux-RevisePal.o -MD -MP -MF $(DEPDIR)/iptux-RevisePal.Tpo -c -o iptux-RevisePal.o `test -f 'RevisePal.cpp' || echo '$(srcdir)/'`RevisePal.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/iptux-RevisePal.Tpo $(DEPDIR)/iptux-RevisePal.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='RevisePal.cpp' object='iptux-RevisePal.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o iptux-RevisePal.o `test -f 'RevisePal.cpp' || echo '$(srcdir)/'`RevisePal.cpp
+
+iptux-RevisePal.obj: RevisePal.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT iptux-RevisePal.obj -MD -MP -MF $(DEPDIR)/iptux-RevisePal.Tpo -c -o iptux-RevisePal.obj `if test -f 'RevisePal.cpp'; then $(CYGPATH_W) 'RevisePal.cpp'; else $(CYGPATH_W) '$(srcdir)/RevisePal.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/iptux-RevisePal.Tpo $(DEPDIR)/iptux-RevisePal.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='RevisePal.cpp' object='iptux-RevisePal.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o iptux-RevisePal.obj `if test -f 'RevisePal.cpp'; then $(CYGPATH_W) 'RevisePal.cpp'; else $(CYGPATH_W) '$(srcdir)/RevisePal.cpp'; fi`
+
+iptux-SendFile.o: SendFile.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT iptux-SendFile.o -MD -MP -MF $(DEPDIR)/iptux-SendFile.Tpo -c -o iptux-SendFile.o `test -f 'SendFile.cpp' || echo '$(srcdir)/'`SendFile.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/iptux-SendFile.Tpo $(DEPDIR)/iptux-SendFile.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='SendFile.cpp' object='iptux-SendFile.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o iptux-SendFile.o `test -f 'SendFile.cpp' || echo '$(srcdir)/'`SendFile.cpp
+
+iptux-SendFile.obj: SendFile.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT iptux-SendFile.obj -MD -MP -MF $(DEPDIR)/iptux-SendFile.Tpo -c -o iptux-SendFile.obj `if test -f 'SendFile.cpp'; then $(CYGPATH_W) 'SendFile.cpp'; else $(CYGPATH_W) '$(srcdir)/SendFile.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/iptux-SendFile.Tpo $(DEPDIR)/iptux-SendFile.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='SendFile.cpp' object='iptux-SendFile.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o iptux-SendFile.obj `if test -f 'SendFile.cpp'; then $(CYGPATH_W) 'SendFile.cpp'; else $(CYGPATH_W) '$(srcdir)/SendFile.cpp'; fi`
+
+iptux-SendFileData.o: SendFileData.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT iptux-SendFileData.o -MD -MP -MF $(DEPDIR)/iptux-SendFileData.Tpo -c -o iptux-SendFileData.o `test -f 'SendFileData.cpp' || echo '$(srcdir)/'`SendFileData.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/iptux-SendFileData.Tpo $(DEPDIR)/iptux-SendFileData.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='SendFileData.cpp' object='iptux-SendFileData.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o iptux-SendFileData.o `test -f 'SendFileData.cpp' || echo '$(srcdir)/'`SendFileData.cpp
+
+iptux-SendFileData.obj: SendFileData.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT iptux-SendFileData.obj -MD -MP -MF $(DEPDIR)/iptux-SendFileData.Tpo -c -o iptux-SendFileData.obj `if test -f 'SendFileData.cpp'; then $(CYGPATH_W) 'SendFileData.cpp'; else $(CYGPATH_W) '$(srcdir)/SendFileData.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/iptux-SendFileData.Tpo $(DEPDIR)/iptux-SendFileData.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='SendFileData.cpp' object='iptux-SendFileData.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o iptux-SendFileData.obj `if test -f 'SendFileData.cpp'; then $(CYGPATH_W) 'SendFileData.cpp'; else $(CYGPATH_W) '$(srcdir)/SendFileData.cpp'; fi`
+
+iptux-ShareFile.o: ShareFile.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT iptux-ShareFile.o -MD -MP -MF $(DEPDIR)/iptux-ShareFile.Tpo -c -o iptux-ShareFile.o `test -f 'ShareFile.cpp' || echo '$(srcdir)/'`ShareFile.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/iptux-ShareFile.Tpo $(DEPDIR)/iptux-ShareFile.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='ShareFile.cpp' object='iptux-ShareFile.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o iptux-ShareFile.o `test -f 'ShareFile.cpp' || echo '$(srcdir)/'`ShareFile.cpp
+
+iptux-ShareFile.obj: ShareFile.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT iptux-ShareFile.obj -MD -MP -MF $(DEPDIR)/iptux-ShareFile.Tpo -c -o iptux-ShareFile.obj `if test -f 'ShareFile.cpp'; then $(CYGPATH_W) 'ShareFile.cpp'; else $(CYGPATH_W) '$(srcdir)/ShareFile.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/iptux-ShareFile.Tpo $(DEPDIR)/iptux-ShareFile.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='ShareFile.cpp' object='iptux-ShareFile.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o iptux-ShareFile.obj `if test -f 'ShareFile.cpp'; then $(CYGPATH_W) 'ShareFile.cpp'; else $(CYGPATH_W) '$(srcdir)/ShareFile.cpp'; fi`
+
+iptux-SoundSystem.o: SoundSystem.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT iptux-SoundSystem.o -MD -MP -MF $(DEPDIR)/iptux-SoundSystem.Tpo -c -o iptux-SoundSystem.o `test -f 'SoundSystem.cpp' || echo '$(srcdir)/'`SoundSystem.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/iptux-SoundSystem.Tpo $(DEPDIR)/iptux-SoundSystem.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='SoundSystem.cpp' object='iptux-SoundSystem.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o iptux-SoundSystem.o `test -f 'SoundSystem.cpp' || echo '$(srcdir)/'`SoundSystem.cpp
+
+iptux-SoundSystem.obj: SoundSystem.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT iptux-SoundSystem.obj -MD -MP -MF $(DEPDIR)/iptux-SoundSystem.Tpo -c -o iptux-SoundSystem.obj `if test -f 'SoundSystem.cpp'; then $(CYGPATH_W) 'SoundSystem.cpp'; else $(CYGPATH_W) '$(srcdir)/SoundSystem.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/iptux-SoundSystem.Tpo $(DEPDIR)/iptux-SoundSystem.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='SoundSystem.cpp' object='iptux-SoundSystem.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o iptux-SoundSystem.obj `if test -f 'SoundSystem.cpp'; then $(CYGPATH_W) 'SoundSystem.cpp'; else $(CYGPATH_W) '$(srcdir)/SoundSystem.cpp'; fi`
+
+iptux-StatusIcon.o: StatusIcon.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT iptux-StatusIcon.o -MD -MP -MF $(DEPDIR)/iptux-StatusIcon.Tpo -c -o iptux-StatusIcon.o `test -f 'StatusIcon.cpp' || echo '$(srcdir)/'`StatusIcon.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/iptux-StatusIcon.Tpo $(DEPDIR)/iptux-StatusIcon.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='StatusIcon.cpp' object='iptux-StatusIcon.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o iptux-StatusIcon.o `test -f 'StatusIcon.cpp' || echo '$(srcdir)/'`StatusIcon.cpp
+
+iptux-StatusIcon.obj: StatusIcon.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT iptux-StatusIcon.obj -MD -MP -MF $(DEPDIR)/iptux-StatusIcon.Tpo -c -o iptux-StatusIcon.obj `if test -f 'StatusIcon.cpp'; then $(CYGPATH_W) 'StatusIcon.cpp'; else $(CYGPATH_W) '$(srcdir)/StatusIcon.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/iptux-StatusIcon.Tpo $(DEPDIR)/iptux-StatusIcon.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='StatusIcon.cpp' object='iptux-StatusIcon.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o iptux-StatusIcon.obj `if test -f 'StatusIcon.cpp'; then $(CYGPATH_W) 'StatusIcon.cpp'; else $(CYGPATH_W) '$(srcdir)/StatusIcon.cpp'; fi`
+
+iptux-TcpData.o: TcpData.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT iptux-TcpData.o -MD -MP -MF $(DEPDIR)/iptux-TcpData.Tpo -c -o iptux-TcpData.o `test -f 'TcpData.cpp' || echo '$(srcdir)/'`TcpData.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/iptux-TcpData.Tpo $(DEPDIR)/iptux-TcpData.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='TcpData.cpp' object='iptux-TcpData.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o iptux-TcpData.o `test -f 'TcpData.cpp' || echo '$(srcdir)/'`TcpData.cpp
+
+iptux-TcpData.obj: TcpData.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT iptux-TcpData.obj -MD -MP -MF $(DEPDIR)/iptux-TcpData.Tpo -c -o iptux-TcpData.obj `if test -f 'TcpData.cpp'; then $(CYGPATH_W) 'TcpData.cpp'; else $(CYGPATH_W) '$(srcdir)/TcpData.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/iptux-TcpData.Tpo $(DEPDIR)/iptux-TcpData.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='TcpData.cpp' object='iptux-TcpData.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o iptux-TcpData.obj `if test -f 'TcpData.cpp'; then $(CYGPATH_W) 'TcpData.cpp'; else $(CYGPATH_W) '$(srcdir)/TcpData.cpp'; fi`
+
+iptux-UdpData.o: UdpData.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT iptux-UdpData.o -MD -MP -MF $(DEPDIR)/iptux-UdpData.Tpo -c -o iptux-UdpData.o `test -f 'UdpData.cpp' || echo '$(srcdir)/'`UdpData.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/iptux-UdpData.Tpo $(DEPDIR)/iptux-UdpData.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='UdpData.cpp' object='iptux-UdpData.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o iptux-UdpData.o `test -f 'UdpData.cpp' || echo '$(srcdir)/'`UdpData.cpp
+
+iptux-UdpData.obj: UdpData.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT iptux-UdpData.obj -MD -MP -MF $(DEPDIR)/iptux-UdpData.Tpo -c -o iptux-UdpData.obj `if test -f 'UdpData.cpp'; then $(CYGPATH_W) 'UdpData.cpp'; else $(CYGPATH_W) '$(srcdir)/UdpData.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/iptux-UdpData.Tpo $(DEPDIR)/iptux-UdpData.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='UdpData.cpp' object='iptux-UdpData.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o iptux-UdpData.obj `if test -f 'UdpData.cpp'; then $(CYGPATH_W) 'UdpData.cpp'; else $(CYGPATH_W) '$(srcdir)/UdpData.cpp'; fi`
+
+iptux-callback.o: callback.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT iptux-callback.o -MD -MP -MF $(DEPDIR)/iptux-callback.Tpo -c -o iptux-callback.o `test -f 'callback.cpp' || echo '$(srcdir)/'`callback.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/iptux-callback.Tpo $(DEPDIR)/iptux-callback.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='callback.cpp' object='iptux-callback.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o iptux-callback.o `test -f 'callback.cpp' || echo '$(srcdir)/'`callback.cpp
+
+iptux-callback.obj: callback.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT iptux-callback.obj -MD -MP -MF $(DEPDIR)/iptux-callback.Tpo -c -o iptux-callback.obj `if test -f 'callback.cpp'; then $(CYGPATH_W) 'callback.cpp'; else $(CYGPATH_W) '$(srcdir)/callback.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/iptux-callback.Tpo $(DEPDIR)/iptux-callback.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='callback.cpp' object='iptux-callback.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o iptux-callback.obj `if test -f 'callback.cpp'; then $(CYGPATH_W) 'callback.cpp'; else $(CYGPATH_W) '$(srcdir)/callback.cpp'; fi`
+
+iptux-dialog.o: dialog.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT iptux-dialog.o -MD -MP -MF $(DEPDIR)/iptux-dialog.Tpo -c -o iptux-dialog.o `test -f 'dialog.cpp' || echo '$(srcdir)/'`dialog.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/iptux-dialog.Tpo $(DEPDIR)/iptux-dialog.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='dialog.cpp' object='iptux-dialog.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o iptux-dialog.o `test -f 'dialog.cpp' || echo '$(srcdir)/'`dialog.cpp
+
+iptux-dialog.obj: dialog.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT iptux-dialog.obj -MD -MP -MF $(DEPDIR)/iptux-dialog.Tpo -c -o iptux-dialog.obj `if test -f 'dialog.cpp'; then $(CYGPATH_W) 'dialog.cpp'; else $(CYGPATH_W) '$(srcdir)/dialog.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/iptux-dialog.Tpo $(DEPDIR)/iptux-dialog.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='dialog.cpp' object='iptux-dialog.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o iptux-dialog.obj `if test -f 'dialog.cpp'; then $(CYGPATH_W) 'dialog.cpp'; else $(CYGPATH_W) '$(srcdir)/dialog.cpp'; fi`
+
+iptux-iptux.o: iptux.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT iptux-iptux.o -MD -MP -MF $(DEPDIR)/iptux-iptux.Tpo -c -o iptux-iptux.o `test -f 'iptux.cpp' || echo '$(srcdir)/'`iptux.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/iptux-iptux.Tpo $(DEPDIR)/iptux-iptux.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='iptux.cpp' object='iptux-iptux.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o iptux-iptux.o `test -f 'iptux.cpp' || echo '$(srcdir)/'`iptux.cpp
+
+iptux-iptux.obj: iptux.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT iptux-iptux.obj -MD -MP -MF $(DEPDIR)/iptux-iptux.Tpo -c -o iptux-iptux.obj `if test -f 'iptux.cpp'; then $(CYGPATH_W) 'iptux.cpp'; else $(CYGPATH_W) '$(srcdir)/iptux.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/iptux-iptux.Tpo $(DEPDIR)/iptux-iptux.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='iptux.cpp' object='iptux-iptux.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o iptux-iptux.obj `if test -f 'iptux.cpp'; then $(CYGPATH_W) 'iptux.cpp'; else $(CYGPATH_W) '$(srcdir)/iptux.cpp'; fi`
+
+iptux-mess.o: mess.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT iptux-mess.o -MD -MP -MF $(DEPDIR)/iptux-mess.Tpo -c -o iptux-mess.o `test -f 'mess.cpp' || echo '$(srcdir)/'`mess.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/iptux-mess.Tpo $(DEPDIR)/iptux-mess.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='mess.cpp' object='iptux-mess.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o iptux-mess.o `test -f 'mess.cpp' || echo '$(srcdir)/'`mess.cpp
+
+iptux-mess.obj: mess.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT iptux-mess.obj -MD -MP -MF $(DEPDIR)/iptux-mess.Tpo -c -o iptux-mess.obj `if test -f 'mess.cpp'; then $(CYGPATH_W) 'mess.cpp'; else $(CYGPATH_W) '$(srcdir)/mess.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/iptux-mess.Tpo $(DEPDIR)/iptux-mess.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='mess.cpp' object='iptux-mess.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o iptux-mess.obj `if test -f 'mess.cpp'; then $(CYGPATH_W) 'mess.cpp'; else $(CYGPATH_W) '$(srcdir)/mess.cpp'; fi`
+
+iptux-output.o: output.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT iptux-output.o -MD -MP -MF $(DEPDIR)/iptux-output.Tpo -c -o iptux-output.o `test -f 'output.cpp' || echo '$(srcdir)/'`output.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/iptux-output.Tpo $(DEPDIR)/iptux-output.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='output.cpp' object='iptux-output.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o iptux-output.o `test -f 'output.cpp' || echo '$(srcdir)/'`output.cpp
+
+iptux-output.obj: output.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT iptux-output.obj -MD -MP -MF $(DEPDIR)/iptux-output.Tpo -c -o iptux-output.obj `if test -f 'output.cpp'; then $(CYGPATH_W) 'output.cpp'; else $(CYGPATH_W) '$(srcdir)/output.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/iptux-output.Tpo $(DEPDIR)/iptux-output.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='output.cpp' object='iptux-output.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o iptux-output.obj `if test -f 'output.cpp'; then $(CYGPATH_W) 'output.cpp'; else $(CYGPATH_W) '$(srcdir)/output.cpp'; fi`
+
+iptux-support.o: support.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT iptux-support.o -MD -MP -MF $(DEPDIR)/iptux-support.Tpo -c -o iptux-support.o `test -f 'support.cpp' || echo '$(srcdir)/'`support.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/iptux-support.Tpo $(DEPDIR)/iptux-support.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='support.cpp' object='iptux-support.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o iptux-support.o `test -f 'support.cpp' || echo '$(srcdir)/'`support.cpp
+
+iptux-support.obj: support.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT iptux-support.obj -MD -MP -MF $(DEPDIR)/iptux-support.Tpo -c -o iptux-support.obj `if test -f 'support.cpp'; then $(CYGPATH_W) 'support.cpp'; else $(CYGPATH_W) '$(srcdir)/support.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/iptux-support.Tpo $(DEPDIR)/iptux-support.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='support.cpp' object='iptux-support.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o iptux-support.obj `if test -f 'support.cpp'; then $(CYGPATH_W) 'support.cpp'; else $(CYGPATH_W) '$(srcdir)/support.cpp'; fi`
+
+iptux-utils.o: utils.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT iptux-utils.o -MD -MP -MF $(DEPDIR)/iptux-utils.Tpo -c -o iptux-utils.o `test -f 'utils.cpp' || echo '$(srcdir)/'`utils.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/iptux-utils.Tpo $(DEPDIR)/iptux-utils.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='utils.cpp' object='iptux-utils.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o iptux-utils.o `test -f 'utils.cpp' || echo '$(srcdir)/'`utils.cpp
+
+iptux-utils.obj: utils.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT iptux-utils.obj -MD -MP -MF $(DEPDIR)/iptux-utils.Tpo -c -o iptux-utils.obj `if test -f 'utils.cpp'; then $(CYGPATH_W) 'utils.cpp'; else $(CYGPATH_W) '$(srcdir)/utils.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/iptux-utils.Tpo $(DEPDIR)/iptux-utils.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='utils.cpp' object='iptux-utils.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o iptux-utils.obj `if test -f 'utils.cpp'; then $(CYGPATH_W) 'utils.cpp'; else $(CYGPATH_W) '$(srcdir)/utils.cpp'; fi`
+
+iptux-wrapper.o: wrapper.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT iptux-wrapper.o -MD -MP -MF $(DEPDIR)/iptux-wrapper.Tpo -c -o iptux-wrapper.o `test -f 'wrapper.cpp' || echo '$(srcdir)/'`wrapper.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/iptux-wrapper.Tpo $(DEPDIR)/iptux-wrapper.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='wrapper.cpp' object='iptux-wrapper.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o iptux-wrapper.o `test -f 'wrapper.cpp' || echo '$(srcdir)/'`wrapper.cpp
+
+iptux-wrapper.obj: wrapper.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT iptux-wrapper.obj -MD -MP -MF $(DEPDIR)/iptux-wrapper.Tpo -c -o iptux-wrapper.obj `if test -f 'wrapper.cpp'; then $(CYGPATH_W) 'wrapper.cpp'; else $(CYGPATH_W) '$(srcdir)/wrapper.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/iptux-wrapper.Tpo $(DEPDIR)/iptux-wrapper.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='wrapper.cpp' object='iptux-wrapper.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o iptux-wrapper.obj `if test -f 'wrapper.cpp'; then $(CYGPATH_W) 'wrapper.cpp'; else $(CYGPATH_W) '$(srcdir)/wrapper.cpp'; fi`
 
 # This directory's subdirectories are mostly independent; you can cd
 # into them and run `make' without going through this Makefile.
