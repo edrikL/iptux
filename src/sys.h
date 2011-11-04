@@ -42,7 +42,14 @@
 #include <dirent.h>
 #include <ftw.h>
 #include <signal.h>
-#include <sys/vfs.h>
+
+#ifdef HAVE_SYS_VFS_H
+    #include <sys/vfs.h>
+#else
+    #include <sys/param.h>
+    #include <sys/mount.h>
+#endif
+
 #include <pwd.h>
 #include <getopt.h>
 #include <locale.h>

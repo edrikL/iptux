@@ -24,7 +24,9 @@
 #include <gdk/gdkkeysyms.h>
 #undef _
 #include <glib/gi18n.h>
-#include <gconf/gconf-client.h>
+#include <gio/gio.h>
+#define G_SETTINGS_ENABLE_BACKEND
+#include <gio/gsettingsbackend.h>
 
 #define ATOM_OBJECT 0xFFFC
 #define OCCUPY_OBJECT 0x01

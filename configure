@@ -627,8 +627,8 @@ PACKAGE_LIBS
 PACKAGE_CFLAGS
 GST_LIBS
 GST_CFLAGS
-GCONF_LIBS
-GCONF_CFLAGS
+GIO_LIBS
+GIO_CFLAGS
 GTK_LIBS
 GTK_CFLAGS
 GTHREAD_LIBS
@@ -759,8 +759,8 @@ GTHREAD_CFLAGS
 GTHREAD_LIBS
 GTK_CFLAGS
 GTK_LIBS
-GCONF_CFLAGS
-GCONF_LIBS
+GIO_CFLAGS
+GIO_LIBS
 GST_CFLAGS
 GST_LIBS'
 
@@ -1409,9 +1409,8 @@ Some influential environment variables:
               linker flags for GTHREAD, overriding pkg-config
   GTK_CFLAGS  C compiler flags for GTK, overriding pkg-config
   GTK_LIBS    linker flags for GTK, overriding pkg-config
-  GCONF_CFLAGS
-              C compiler flags for GCONF, overriding pkg-config
-  GCONF_LIBS  linker flags for GCONF, overriding pkg-config
+  GIO_CFLAGS  C compiler flags for GIO, overriding pkg-config
+  GIO_LIBS    linker flags for GIO, overriding pkg-config
   GST_CFLAGS  C compiler flags for GST, overriding pkg-config
   GST_LIBS    linker flags for GST, overriding pkg-config
 
@@ -5305,6 +5304,7 @@ fi
 done
 
 
+
 $as_echo "#define __IP_TUX__ 1" >>confdefs.h
 
 # Check whether --enable-message was given.
@@ -5347,40 +5347,47 @@ fi
 test "x${prefix}" = xNONE && prefix="${ac_default_prefix}"
 test "x${exec_prefix}" = xNONE && exec_prefix="${prefix}"
 tmpdir=`eval echo ${bindir}`
+
 cat >>confdefs.h <<_ACEOF
 #define __EXEC_PATH "${tmpdir}"
 _ACEOF
 
 tmpdir=`eval echo ${datadir}`
 tmpdir=`eval echo ${tmpdir}`
+
 cat >>confdefs.h <<_ACEOF
 #define __DATA_PATH "${tmpdir}"
 _ACEOF
 
 localedir="${tmpdir}/locale"
+
 cat >>confdefs.h <<_ACEOF
 #define __LOCALE_PATH "${localedir}"
 _ACEOF
 
 desktopdir="${tmpdir}/applications"
+
 cat >>confdefs.h <<_ACEOF
 #define __DESKTOP_PATH "${desktopdir}"
 _ACEOF
 
 
 logodir="${tmpdir}/icons"
+
 cat >>confdefs.h <<_ACEOF
 #define __LOGO_PATH "${logodir}"
 _ACEOF
 
 
 pixmapsdir="${tmpdir}/iptux/pixmaps"
+
 cat >>confdefs.h <<_ACEOF
 #define __PIXMAPS_PATH "${pixmapsdir}"
 _ACEOF
 
 
 sounddir="${tmpdir}/iptux/sound"
+
 cat >>confdefs.h <<_ACEOF
 #define __SOUND_PATH "${sounddir}"
 _ACEOF
@@ -5574,7 +5581,6 @@ installed software in a non-standard prefix.
 Alternatively, you may set the environment variables GLIB_CFLAGS
 and GLIB_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details." "$LINENO" 5
-
 elif test $pkg_failed = untried; then
      	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
@@ -5590,7 +5596,6 @@ See the pkg-config man page for more details.
 
 To get pkg-config, see <http://pkg-config.freedesktop.org/>.
 See \`config.log' for more details" "$LINENO" 5; }
-
 else
 	GLIB_CFLAGS=$pkg_cv_GLIB_CFLAGS
 	GLIB_LIBS=$pkg_cv_GLIB_LIBS
@@ -5666,7 +5671,6 @@ installed software in a non-standard prefix.
 Alternatively, you may set the environment variables GTHREAD_CFLAGS
 and GTHREAD_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details." "$LINENO" 5
-
 elif test $pkg_failed = untried; then
      	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
@@ -5682,7 +5686,6 @@ See the pkg-config man page for more details.
 
 To get pkg-config, see <http://pkg-config.freedesktop.org/>.
 See \`config.log' for more details" "$LINENO" 5; }
-
 else
 	GTHREAD_CFLAGS=$pkg_cv_GTHREAD_CFLAGS
 	GTHREAD_LIBS=$pkg_cv_GTHREAD_LIBS
@@ -5758,7 +5761,6 @@ installed software in a non-standard prefix.
 Alternatively, you may set the environment variables GTK_CFLAGS
 and GTK_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details." "$LINENO" 5
-
 elif test $pkg_failed = untried; then
      	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
@@ -5774,7 +5776,6 @@ See the pkg-config man page for more details.
 
 To get pkg-config, see <http://pkg-config.freedesktop.org/>.
 See \`config.log' for more details" "$LINENO" 5; }
-
 else
 	GTK_CFLAGS=$pkg_cv_GTK_CFLAGS
 	GTK_LIBS=$pkg_cv_GTK_LIBS
@@ -5782,38 +5783,38 @@ else
 $as_echo "yes" >&6; }
 
 fi
-gconf_modules="gconf-2.0 >= 2.4.0"
+gio_modules="gio-2.0 >= 2.26.0"
 
 pkg_failed=no
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for GCONF" >&5
-$as_echo_n "checking for GCONF... " >&6; }
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for GIO" >&5
+$as_echo_n "checking for GIO... " >&6; }
 
-if test -n "$GCONF_CFLAGS"; then
-    pkg_cv_GCONF_CFLAGS="$GCONF_CFLAGS"
+if test -n "$GIO_CFLAGS"; then
+    pkg_cv_GIO_CFLAGS="$GIO_CFLAGS"
  elif test -n "$PKG_CONFIG"; then
     if test -n "$PKG_CONFIG" && \
-    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"\$gconf_modules\""; } >&5
-  ($PKG_CONFIG --exists --print-errors "$gconf_modules") 2>&5
+    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"\$gio_modules\""; } >&5
+  ($PKG_CONFIG --exists --print-errors "$gio_modules") 2>&5
   ac_status=$?
   $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
   test $ac_status = 0; }; then
-  pkg_cv_GCONF_CFLAGS=`$PKG_CONFIG --cflags "$gconf_modules" 2>/dev/null`
+  pkg_cv_GIO_CFLAGS=`$PKG_CONFIG --cflags "$gio_modules" 2>/dev/null`
 else
   pkg_failed=yes
 fi
  else
     pkg_failed=untried
 fi
-if test -n "$GCONF_LIBS"; then
-    pkg_cv_GCONF_LIBS="$GCONF_LIBS"
+if test -n "$GIO_LIBS"; then
+    pkg_cv_GIO_LIBS="$GIO_LIBS"
  elif test -n "$PKG_CONFIG"; then
     if test -n "$PKG_CONFIG" && \
-    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"\$gconf_modules\""; } >&5
-  ($PKG_CONFIG --exists --print-errors "$gconf_modules") 2>&5
+    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"\$gio_modules\""; } >&5
+  ($PKG_CONFIG --exists --print-errors "$gio_modules") 2>&5
   ac_status=$?
   $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
   test $ac_status = 0; }; then
-  pkg_cv_GCONF_LIBS=`$PKG_CONFIG --libs "$gconf_modules" 2>/dev/null`
+  pkg_cv_GIO_LIBS=`$PKG_CONFIG --libs "$gio_modules" 2>/dev/null`
 else
   pkg_failed=yes
 fi
@@ -5833,24 +5834,23 @@ else
         _pkg_short_errors_supported=no
 fi
         if test $_pkg_short_errors_supported = yes; then
-	        GCONF_PKG_ERRORS=`$PKG_CONFIG --short-errors --print-errors "$gconf_modules" 2>&1`
+	        GIO_PKG_ERRORS=`$PKG_CONFIG --short-errors --print-errors "$gio_modules" 2>&1`
         else
-	        GCONF_PKG_ERRORS=`$PKG_CONFIG --print-errors "$gconf_modules" 2>&1`
+	        GIO_PKG_ERRORS=`$PKG_CONFIG --print-errors "$gio_modules" 2>&1`
         fi
 	# Put the nasty error message in config.log where it belongs
-	echo "$GCONF_PKG_ERRORS" >&5
+	echo "$GIO_PKG_ERRORS" >&5
 
-	as_fn_error $? "Package requirements ($gconf_modules) were not met:
+	as_fn_error $? "Package requirements ($gio_modules) were not met:
 
-$GCONF_PKG_ERRORS
+$GIO_PKG_ERRORS
 
 Consider adjusting the PKG_CONFIG_PATH environment variable if you
 installed software in a non-standard prefix.
 
-Alternatively, you may set the environment variables GCONF_CFLAGS
-and GCONF_LIBS to avoid the need to call pkg-config.
+Alternatively, you may set the environment variables GIO_CFLAGS
+and GIO_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details." "$LINENO" 5
-
 elif test $pkg_failed = untried; then
      	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
@@ -5860,16 +5860,15 @@ as_fn_error $? "The pkg-config script could not be found or is too old.  Make su
 is in your PATH or set the PKG_CONFIG environment variable to the full
 path to pkg-config.
 
-Alternatively, you may set the environment variables GCONF_CFLAGS
-and GCONF_LIBS to avoid the need to call pkg-config.
+Alternatively, you may set the environment variables GIO_CFLAGS
+and GIO_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details.
 
 To get pkg-config, see <http://pkg-config.freedesktop.org/>.
 See \`config.log' for more details" "$LINENO" 5; }
-
 else
-	GCONF_CFLAGS=$pkg_cv_GCONF_CFLAGS
-	GCONF_LIBS=$pkg_cv_GCONF_LIBS
+	GIO_CFLAGS=$pkg_cv_GIO_CFLAGS
+	GIO_LIBS=$pkg_cv_GIO_LIBS
         { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
 $as_echo "yes" >&6; }
 
@@ -5945,18 +5944,20 @@ $as_echo "yes" >&6; }
 	have_gst=yes
 fi
 if test "${have_gst}" = yes ; then
+
 $as_echo "#define HAVE_GST 1" >>confdefs.h
 
 else
 { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: You need GStreamer-0.10 or later installed if you need sound relevant functions" >&5
 $as_echo "$as_me: WARNING: You need GStreamer-0.10 or later installed if you need sound relevant functions" >&2;}
 fi
-PACKAGE_CFLAGS="${GLIB_CFLAGS} ${GTHREAD_CFLAGS} ${GTK_CFLAGS} ${GCONF_CFLAGS} ${GST_CFLAGS}"
-PACKAGE_LIBS="${GLIB_LIBS} ${GTHREAD_LIBS} ${GTK_LIBS} ${GCONF_LIBS} ${GST_LIBS}"
+PACKAGE_CFLAGS="${GLIB_CFLAGS} ${GTHREAD_CFLAGS} ${GTK_CFLAGS} ${GIO_CFLAGS} ${GST_CFLAGS}"
+PACKAGE_LIBS="${GLIB_LIBS} ${GTHREAD_LIBS} ${GTK_LIBS} ${GIO_LIBS} ${GST_LIBS}"
 
 
 
 GETTEXT_PACKAGE=iptux
+
 
 cat >>confdefs.h <<_ACEOF
 #define GETTEXT_PACKAGE "${GETTEXT_PACKAGE}"
