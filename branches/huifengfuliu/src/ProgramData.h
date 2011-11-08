@@ -15,6 +15,7 @@
 #include "sys.h"
 #include "net.h"
 #include "deplib.h"
+#include "UseGSettings.h"
 
 /* flags
 // 图标(:6);程序启动后只显示托盘图标而不显示面板
@@ -73,11 +74,11 @@ private:
         void CreateCursor();
         void CreateTagTable();
 
-        void WriteNetSegment(GConfClient *client);
-        void ReadNetSegment(GConfClient *client);
+        void WriteNetSegment(UseGSettings &gs);
+        void ReadNetSegment(UseGSettings &gs);
 private:
-        static void GconfNotifyFunc(GConfClient *client, guint cnxnid,
-                                 GConfEntry *entry, ProgramData *progdt);
+//        static void GconfNotifyFunc(GConfClient *client, guint cnxnid,
+//                                 GConfEntry *entry, ProgramData *progdt);
 };
 
 #endif

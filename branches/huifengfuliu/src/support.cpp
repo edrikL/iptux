@@ -15,6 +15,7 @@
 #include "MainWindow.h"
 #include "LogSystem.h"
 #include "SoundSystem.h"
+#include "UseGSettings.h"
 #include "dialog.h"
 #include "utils.h"
 #include "output.h"
@@ -28,6 +29,8 @@ extern SoundSystem sndsys;
  */
 void iptux_init()
 {
+        UseGSettings::initGSettings();
+
         bind_iptux_port();
         init_iptux_environment();
 
