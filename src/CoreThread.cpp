@@ -73,7 +73,7 @@ void CoreThread::CoreThreadEntry()
 void CoreThread::WriteSharedData()
 {
 	UseGSettings gs;
-	gs.getSettings("iptux");
+	gs.getSettings("iptux.corethread");
         GSList *tlist = pblist;
 	char **pList = new char *[g_slist_length(tlist) + 1];
 	int i = 0;
@@ -83,9 +83,9 @@ void CoreThread::WriteSharedData()
                 tlist = g_slist_next(tlist);
         }
 	pList[i] = NULL;
-	gs.setStrV("shared_file_list", pList);
+	gs.setStrV("shared-file-list", pList);
 	delete [] pList;
-        if(passwd) gs.setString("access_shared_limit", passwd);
+        if(passwd) gs.setString("access-shared-limit", passwd);
 }
 
 /**
@@ -890,9 +890,9 @@ void CoreThread::ReadSharedData()
         FileInfo *file;
         struct stat64 st;
 	UseGSettings gs;
-	gs.getSettings("iptux");
-	char **pList = gs.getStrV("shared_file_list");
-	passwd = gs.getString("access_shared_limit");
+	gs.getSettings("iptux.corethread");
+	char **pList = gs.getStrV("shared-file-list");
+	passwd = gs.getString("access-shared-limit");
 
         /* 分析数据并加入文件链表 */
 	for(int i = 0; pList[i]; i ++)

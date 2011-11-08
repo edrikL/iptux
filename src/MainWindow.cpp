@@ -15,6 +15,7 @@
 #include "DialogPeer.h"
 #include "DialogGroup.h"
 #include "DataSettings.h"
+#include "UseGSettings.h"
 #include "Command.h"
 #include "DetectPal.h"
 #include "ShareFile.h"
@@ -503,31 +504,25 @@ void MainWindow::ClearSublayer()
  */
 void MainWindow::ReadUILayout()
 {
-        GConfClient *client;
         gint numeric;
+	UseGSettings gs;
+	gs.getSettings("iptux.mainwindow");
 
-        client = gconf_client_get_default();
-
-        numeric = gconf_client_get_int(client, GCONF_PATH "/main_window_width", NULL);
+        numeric = gs.getInt("main-window-width");
         numeric = numeric ? numeric : 250;
         g_datalist_set_data(&dtset, "main-window-width", GINT_TO_POINTER(numeric));
-        numeric = gconf_client_get_int(client, GCONF_PATH "/main_window_height", NULL);
+        numeric = gs.getInt("main-window-height");
         numeric = numeric ? numeric : 510;
         g_datalist_set_data(&dtset, "main-window-height", GINT_TO_POINTER(numeric));
-
-        numeric = gconf_client_get_int(client,
-                         GCONF_PATH "/mwin_main_paned_divide", NULL);
+        numeric = gs.getInt("mwin-main-paned-divide");
         numeric = numeric ? numeric : 210;
         g_datalist_set_data(&dtset, "mwin-main-paned-divide", GINT_TO_POINTER(numeric));
-
-        numeric = gconf_client_get_int(client, GCONF_PATH "/trans_window_width", NULL);
+        numeric = gs.getInt("trans-window-width");
         numeric = numeric ? numeric : 500;
         g_datalist_set_data(&dtset, "trans-window-width", GINT_TO_POINTER(numeric));
-        numeric = gconf_client_get_int(client, GCONF_PATH "/trans_window_height", NULL);
+        numeric = gs.getInt("trans-window-height");
         numeric = numeric ? numeric : 350;
         g_datalist_set_data(&dtset, "trans-window-height", GINT_TO_POINTER(numeric));
-
-        g_object_unref(client);
 }
 
 /**
@@ -535,25 +530,20 @@ void MainWindow::ReadUILayout()
  */
 void MainWindow::WriteUILayout()
 {
-        GConfClient *client;
         gint numeric;
-
-        client = gconf_client_get_default();
+	UseGSettings gs;
+	gs.getSettings("iptux.mainwindow");
 
         numeric = GPOINTER_TO_INT(g_datalist_get_data(&dtset, "main-window-width"));
-        gconf_client_set_int(client, GCONF_PATH "/main_window_width", numeric, NULL);
+        gs.setInt("main-window-width", numeric);
         numeric = GPOINTER_TO_INT(g_datalist_get_data(&dtset, "main-window-height"));
-        gconf_client_set_int(client, GCONF_PATH "/main_window_height", numeric, NULL);
-
+        gs.setInt("main-window-height", numeric);
         numeric = GPOINTER_TO_INT(g_datalist_get_data(&dtset, "mwin-main-paned-divide"));
-        gconf_client_set_int(client, GCONF_PATH "/mwin_main_paned_divide", numeric, NULL);
-
+        gs.setInt("mwin-main-paned-divide", numeric);
         numeric = GPOINTER_TO_INT(g_datalist_get_data(&dtset, "trans-window-width"));
-        gconf_client_set_int(client, GCONF_PATH "/trans_window_width", numeric, NULL);
+        gs.setInt("trans-window-width", numeric);
         numeric = GPOINTER_TO_INT(g_datalist_get_data(&dtset, "trans-window-height"));
-        gconf_client_set_int(client, GCONF_PATH "/trans_window_height", numeric, NULL);
-
-        g_object_unref(client);
+        gs.setInt("trans-window-height", numeric);
 }
 
 /**

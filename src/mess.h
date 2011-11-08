@@ -17,6 +17,10 @@
 #include "deplib.h"
 #include "ipmsg.h"
 
+#ifndef O_LARGEFILE
+#define O_LARGEFILE 0
+#endif
+
 /***************偶是可爱的分割线(枚举变量)*****************/
 
 /**

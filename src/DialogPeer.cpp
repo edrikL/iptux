@@ -14,6 +14,7 @@
 #include "CoreThread.h"
 #include "MainWindow.h"
 #include "LogSystem.h"
+#include "UseGSettings.h"
 #include "Command.h"
 #include "SendFile.h"
 #include "HelpDialog.h"
@@ -124,36 +125,25 @@ void DialogPeer::ClearAllPalData()
 */
 void DialogPeer::ReadUILayout()
 {
-        GConfClient *client;
         gint numeric;
+	UseGSettings gs;
+	gs.getSettings("iptux.dialogpeer");
 
-        client = gconf_client_get_default();
-
-        numeric = gconf_client_get_int(client, GCONF_PATH "/peer_window_width", NULL);
+        numeric = gs.getInt("peer-window-width");
         numeric = numeric ? numeric : 570;
         g_datalist_set_data(&dtset, "window-width", GINT_TO_POINTER(numeric));
-        numeric = gconf_client_get_int(client, GCONF_PATH "/peer_window_height", NULL);
+        numeric = gs.getInt("peer-window-height");
         numeric = numeric ? numeric : 420;
         g_datalist_set_data(&dtset, "window-height", GINT_TO_POINTER(numeric));
-
-        numeric = gconf_client_get_int(client,
-                         GCONF_PATH "/peer_main_paned_divide", NULL);
+        numeric = gs.getInt("peer-main-paned-divide");
         numeric = numeric ? numeric : 375;
         g_datalist_set_data(&dtset, "main-paned-divide", GINT_TO_POINTER(numeric));
-
-        numeric = gconf_client_get_int(client,
-                         GCONF_PATH "/peer_historyinput_paned_divide", NULL);
+        numeric = gs.getInt("peer-historyinput-paned-divide");
         numeric = numeric ? numeric : 255;
-        g_datalist_set_data(&dtset, "historyinput-paned-divide",
-                                         GINT_TO_POINTER(numeric));
-
-        numeric = gconf_client_get_int(client,
-                         GCONF_PATH "/peer_infoenclosure_paned_divide", NULL);
+        g_datalist_set_data(&dtset, "historyinput-paned-divide", GINT_TO_POINTER(numeric));
+        numeric = gs.getInt("peer-infoenclosure-paned-divide");
         numeric = numeric ? numeric : 255;
-        g_datalist_set_data(&dtset, "infoenclosure-paned-divide",
-                                         GINT_TO_POINTER(numeric));
-
-        g_object_unref(client);
+        g_datalist_set_data(&dtset, "infoenclosure-paned-divide", GINT_TO_POINTER(numeric));
 }
 
 /**
@@ -161,30 +151,20 @@ void DialogPeer::ReadUILayout()
  */
 void DialogPeer::WriteUILayout()
 {
-        GConfClient *client;
         gint numeric;
-
-        client = gconf_client_get_default();
+	UseGSettings gs;
+	gs.getSettings("iptux.dialogpeer");
 
         numeric = GPOINTER_TO_INT(g_datalist_get_data(&dtset, "window-width"));
-        gconf_client_set_int(client, GCONF_PATH "/peer_window_width", numeric, NULL);
+        gs.setInt("peer-window-width", numeric);
         numeric = GPOINTER_TO_INT(g_datalist_get_data(&dtset, "window-height"));
-        gconf_client_set_int(client, GCONF_PATH "/peer_window_height", numeric, NULL);
-
+        gs.setInt("peer-window-height", numeric);
         numeric = GPOINTER_TO_INT(g_datalist_get_data(&dtset, "main-paned-divide"));
-        gconf_client_set_int(client, GCONF_PATH "/peer_main_paned_divide", numeric, NULL);
-
-        numeric = GPOINTER_TO_INT(g_datalist_get_data(&dtset,
-                                 "historyinput-paned-divide"));
-        gconf_client_set_int(client, GCONF_PATH "/peer_historyinput_paned_divide",
-                                                                 numeric, NULL);
-
-        numeric = GPOINTER_TO_INT(g_datalist_get_data(&dtset,
-                                 "infoenclosure-paned-divide"));
-        gconf_client_set_int(client, GCONF_PATH "/peer_infoenclosure_paned_divide",
-                                                                 numeric, NULL);
-
-        g_object_unref(client);
+        gs.setInt("peer-main-paned-divide", numeric);
+        numeric = GPOINTER_TO_INT(g_datalist_get_data(&dtset, "historyinput-paned-divide"));
+        gs.setInt("peer-historyinput-paned-divide", numeric);
+        numeric = GPOINTER_TO_INT(g_datalist_get_data(&dtset, "infoenclosure-paned-divide"));
+        gs.setInt("peer-infoenclosure-paned-divide", numeric);
 }
 
 
