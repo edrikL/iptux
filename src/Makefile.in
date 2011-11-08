@@ -61,7 +61,8 @@ am_iptux_OBJECTS = iptux-AnalogFS.$(OBJEXT) iptux-Command.$(OBJEXT) \
 	iptux-callback.$(OBJEXT) iptux-dialog.$(OBJEXT) \
 	iptux-iptux.$(OBJEXT) iptux-mess.$(OBJEXT) \
 	iptux-output.$(OBJEXT) iptux-support.$(OBJEXT) \
-	iptux-utils.$(OBJEXT) iptux-wrapper.$(OBJEXT)
+	iptux-utils.$(OBJEXT) iptux-wrapper.$(OBJEXT) \
+	iptux-UseGSettings.$(OBJEXT)
 iptux_OBJECTS = $(am_iptux_OBJECTS)
 iptux_LDADD = $(LDADD)
 iptux_LINK = $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(iptux_LDFLAGS) \
@@ -252,7 +253,7 @@ iptux_SOURCES = AnalogFS.cpp Command.cpp CoreThread.cpp DataSettings.cpp \
 	MainWindow.cpp ProgramData.cpp RecvFile.cpp RecvFileData.cpp RevisePal.cpp \
 	SendFile.cpp SendFileData.cpp ShareFile.cpp SoundSystem.cpp StatusIcon.cpp \
 	TcpData.cpp UdpData.cpp callback.cpp dialog.cpp iptux.cpp mess.cpp output.cpp \
-	support.cpp utils.cpp wrapper.cpp
+	support.cpp utils.cpp wrapper.cpp UseGSettings.cpp
 
 AM_CXXFLAGS = -Wall
 
@@ -265,7 +266,7 @@ noinst_HEADERS = AnalogFS.h Command.h CoreThread.h DataSettings.h DetectPal.h Di
 	DialogGroup.h DialogPeer.h HelpDialog.h LogSystem.h MainWindow.h ProgramData.h \
 	RecvFile.h RecvFileData.h RevisePal.h SendFile.h SendFileData.h ShareFile.h \
 	SoundSystem.h StatusIcon.h TcpData.h UdpData.h callback.h deplib.h dialog.h \
-	ipmsg.h mess.h net.h output.h support.h sys.h utils.h wrapper.h
+	ipmsg.h mess.h net.h output.h support.h sys.h utils.h wrapper.h UseGSettings.h
 
 SUBDIRS = uninstall
 all: all-recursive
@@ -371,6 +372,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/iptux-StatusIcon.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/iptux-TcpData.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/iptux-UdpData.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/iptux-UseGSettings.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/iptux-callback.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/iptux-dialog.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/iptux-iptux.Po@am__quote@
@@ -813,6 +815,20 @@ iptux-wrapper.obj: wrapper.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='wrapper.cpp' object='iptux-wrapper.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o iptux-wrapper.obj `if test -f 'wrapper.cpp'; then $(CYGPATH_W) 'wrapper.cpp'; else $(CYGPATH_W) '$(srcdir)/wrapper.cpp'; fi`
+
+iptux-UseGSettings.o: UseGSettings.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT iptux-UseGSettings.o -MD -MP -MF $(DEPDIR)/iptux-UseGSettings.Tpo -c -o iptux-UseGSettings.o `test -f 'UseGSettings.cpp' || echo '$(srcdir)/'`UseGSettings.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/iptux-UseGSettings.Tpo $(DEPDIR)/iptux-UseGSettings.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='UseGSettings.cpp' object='iptux-UseGSettings.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o iptux-UseGSettings.o `test -f 'UseGSettings.cpp' || echo '$(srcdir)/'`UseGSettings.cpp
+
+iptux-UseGSettings.obj: UseGSettings.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT iptux-UseGSettings.obj -MD -MP -MF $(DEPDIR)/iptux-UseGSettings.Tpo -c -o iptux-UseGSettings.obj `if test -f 'UseGSettings.cpp'; then $(CYGPATH_W) 'UseGSettings.cpp'; else $(CYGPATH_W) '$(srcdir)/UseGSettings.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/iptux-UseGSettings.Tpo $(DEPDIR)/iptux-UseGSettings.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='UseGSettings.cpp' object='iptux-UseGSettings.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(iptux_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o iptux-UseGSettings.obj `if test -f 'UseGSettings.cpp'; then $(CYGPATH_W) 'UseGSettings.cpp'; else $(CYGPATH_W) '$(srcdir)/UseGSettings.cpp'; fi`
 
 # This directory's subdirectories are mostly independent; you can cd
 # into them and run `make' without going through this Makefile.

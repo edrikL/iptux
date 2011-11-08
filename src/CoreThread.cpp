@@ -13,6 +13,7 @@
 #include "ProgramData.h"
 #include "MainWindow.h"
 #include "LogSystem.h"
+#include "UseGSettings.h"
 #include "UdpData.h"
 #include "TcpData.h"
 #include "Command.h"
@@ -71,26 +72,20 @@ void CoreThread::CoreThreadEntry()
  */
 void CoreThread::WriteSharedData()
 {
-        GConfClient *client;
-        GSList *list, *tlist;
-
-        list = NULL;
-        /* 获取共享文件链表 */
-        tlist = pblist;
+	UseGSettings gs;
+	gs.getSettings("iptux");
+        GSList *tlist = pblist;
+	char **pList = new char *[g_slist_length(tlist) + 1];
+	int i = 0;
         while (tlist) {
-                list = g_slist_append(list, ((FileInfo *)tlist->data)->filepath);
+		pList[i] = ((FileInfo *)tlist->data)->filepath;
+		i ++;
                 tlist = g_slist_next(tlist);
         }
-        /* 写出数据 */
-        client = gconf_client_get_default();
-        gconf_client_set_list(client, GCONF_PATH "/shared_file_list",
-                                         GCONF_VALUE_STRING, list, NULL);
-        if (passwd)
-                gconf_client_set_string(client, GCONF_PATH "/access_shared_limit",
-                                                                 passwd, NULL);
-        g_object_unref(client);
-        /* 释放链表 */
-        g_slist_free(list);
+	pList[i] = NULL;
+	gs.setStrV("shared_file_list", pList);
+	delete [] pList;
+        if(passwd) gs.setString("access_shared_limit", passwd);
 }
 
 /**
@@ -892,24 +887,19 @@ void CoreThread::InitThemeSublayerData()
  */
 void CoreThread::ReadSharedData()
 {
-        GConfClient *client;
-        GSList *list, *tlist;
         FileInfo *file;
         struct stat64 st;
-
-        /* 读取共享文件数据 */
-        client = gconf_client_get_default();
-        list = gconf_client_get_list(client, GCONF_PATH "/shared_file_list",
-                                                 GCONF_VALUE_STRING, NULL);
-        passwd = gconf_client_get_string(client, GCONF_PATH "/access_shared_limit", NULL);
-        g_object_unref(client);
+	UseGSettings gs;
+	gs.getSettings("iptux");
+	char **pList = gs.getStrV("shared_file_list");
+	passwd = gs.getString("access_shared_limit");
 
         /* 分析数据并加入文件链表 */
-        for(tlist = list; tlist; tlist = g_slist_next(tlist)) {
-                if (stat64((char *)tlist->data, &st) == -1
-                         || !(S_ISREG(st.st_mode) || S_ISDIR(st.st_mode))) {
-                        g_free(tlist->data);
-                        tlist->data = NULL;
+	for(int i = 0; pList[i]; i ++)
+	{
+                if (stat64(pList[i], &st) == -1 || !(S_ISREG(st.st_mode) || S_ISDIR(st.st_mode))) 
+		{
+			delete pList[i];
                         continue;
                 }
                 /* 加入文件信息到链表 */
@@ -917,13 +907,12 @@ void CoreThread::ReadSharedData()
                 pblist = g_slist_append(pblist, file);
                 file->fileid = pbn++;
                 /* file->packetn = 0;//没必要设置此字段 */
-                file->fileattr = S_ISREG(st.st_mode) ? IPMSG_FILE_REGULAR :
-                                                         IPMSG_FILE_DIR;
+                file->fileattr = S_ISREG(st.st_mode) ? IPMSG_FILE_REGULAR : IPMSG_FILE_DIR;
                 /* file->filesize = 0;//我可不愿意程序启动时在这儿卡住 */
                 /* file->fileown = NULL;//没必要设置此字段 */
-                file->filepath = (char *)tlist->data;
+                file->filepath = pList[i];
         }
-        g_slist_free(list);
+	delete [] pList;
 }
 
 /**
