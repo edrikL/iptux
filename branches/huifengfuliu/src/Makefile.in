@@ -255,7 +255,7 @@ iptux_SOURCES = AnalogFS.cpp Command.cpp CoreThread.cpp DataSettings.cpp \
 	TcpData.cpp UdpData.cpp callback.cpp dialog.cpp iptux.cpp mess.cpp output.cpp \
 	support.cpp utils.cpp wrapper.cpp UseGSettings.cpp
 
-AM_CXXFLAGS = -Wall
+AM_CXXFLAGS = -Wall -g
 
 # set the include path found by configure
 iptux_CPPFLAGS = $(all_includes) @PACKAGE_CFLAGS@

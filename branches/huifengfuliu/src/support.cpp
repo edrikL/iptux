@@ -39,10 +39,10 @@ void iptux_init()
         sndsys.InitSublayer();
 
         signal(SIGPIPE, SIG_IGN);
-        signal(SIGHUP, (sighandler_t) iptux_quit);
-        signal(SIGINT, (sighandler_t) iptux_quit);
-        signal(SIGQUIT, (sighandler_t) iptux_quit);
-        signal(SIGTERM, (sighandler_t) iptux_quit);
+        signal(SIGHUP, (sig_t) iptux_quit);
+        signal(SIGINT, (sig_t) iptux_quit);
+        signal(SIGQUIT, (sig_t) iptux_quit);
+        signal(SIGTERM, (sig_t) iptux_quit);
 
         lgsys.SystemLog(_("Loading the process successfully!"));
 }

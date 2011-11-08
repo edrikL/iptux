@@ -12,6 +12,7 @@
 #include "RecvFile.h"
 #include "RecvFileData.h"
 #include "ProgramData.h"
+#include "UseGSettings.h"
 #include "callback.h"
 #include "utils.h"
 extern ProgramData progdt;
@@ -88,19 +89,16 @@ void RecvFile::ClearSublayer()
  */
 void RecvFile::ReadUILayout()
 {
-        GConfClient *client;
         gint numeric;
+	UseGSettings gs;
+	gs.getSettings("iptux.recvfile");
 
-        client = gconf_client_get_default();
-
-        numeric = gconf_client_get_int(client, GCONF_PATH "/recv_window_width", NULL);
+        numeric = gs.getInt("recv-window-width");
         numeric = numeric ? numeric : 500;
         g_datalist_set_data(&dtset, "window-width", GINT_TO_POINTER(numeric));
-        numeric = gconf_client_get_int(client, GCONF_PATH "/recv_window_height", NULL);
+        numeric = gs.getInt("recv-window-height");
         numeric = numeric ? numeric : 350;
         g_datalist_set_data(&dtset, "window-height", GINT_TO_POINTER(numeric));
-
-        g_object_unref(client);
 }
 
 /**
@@ -108,17 +106,14 @@ void RecvFile::ReadUILayout()
  */
 void RecvFile::WriteUILayout()
 {
-        GConfClient *client;
         gint numeric;
-
-        client = gconf_client_get_default();
+	UseGSettings gs;
+	gs.getSettings("iptux.recvfile");
 
         numeric = GPOINTER_TO_INT(g_datalist_get_data(&dtset, "window-width"));
-        gconf_client_set_int(client, GCONF_PATH "/recv_window_width", numeric, NULL);
+        gs.setInt("recv-window-width", numeric);
         numeric = GPOINTER_TO_INT(g_datalist_get_data(&dtset, "window-height"));
-        gconf_client_set_int(client, GCONF_PATH "/recv_window_height", numeric, NULL);
-
-        g_object_unref(client);
+        gs.setInt("recv-window-height", numeric);
 }
 
 /**

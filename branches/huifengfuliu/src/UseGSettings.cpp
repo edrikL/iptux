@@ -9,12 +9,18 @@
 // Copyright: See COPYING file that comes with this distribution
 //
 //
+#ifdef HAVE_CONFIG_H
+     #include <config.h>
+#endif
+
 #include <string.h>
+#include <glib/gprintf.h>
 #include <gio/gio.h>
 #define G_SETTINGS_ENABLE_BACKEND
 #include <gio/gsettingsbackend.h>
 #include "UseGSettings.h"
 
+#define MAX_PATH 1024
 
 UseGSettings::UseGSettings()
 {
@@ -33,7 +39,7 @@ UseGSettings::~UseGSettings()
  */
 void UseGSettings::initGSettings(const char *sPath)
 {
-     g_char sEnv[MAX_PATHLEN];
+     gchar sEnv[MAX_PATH];
      if(sPath)
      {
 	  g_sprintf(sEnv, "%s:%s", sPath, g_getenv("XDG_DATA_DIRS"));
@@ -73,7 +79,7 @@ void UseGSettings::getSettings(const char *sSchema, const char *sFileName)
      }
      else
      {
-	  g_char sSettingsFile[MAX_PATHLEN];
+	  gchar sSettingsFile[MAX_PATH];
 	  g_sprintf(sSettingsFile, "%s/%s/settings.ini", g_get_user_config_dir(), PACKAGE_NAME);
 	  pBkend = g_keyfile_settings_backend_new(sSettingsFile, "/", NULL);
      }
@@ -88,7 +94,7 @@ void UseGSettings::getSettings(const char *sSchema, const char *sFileName)
  * @return 字符串键值。
  * @note 返回的字符串需要手动释放。
  */
-char *UseGSettings::getString(const char *sKey; const char *sDefault)
+char *UseGSettings::getString(const char *sKey, const char *sDefault)
 {
      char *str;
      str = g_settings_get_string(G_SETTINGS(m_pSettings), sKey);

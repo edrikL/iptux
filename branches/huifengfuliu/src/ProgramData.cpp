@@ -88,31 +88,31 @@ void ProgramData::InitSublayer()
 void ProgramData::WriteProgData()
 {
         UseGSettings gs;
-	gs.getSettings("iptux");
+	gs.getSettings("iptux.programdata");
         gettimeofday(&timestamp, NULL); //更新时间戳
 
-        gs.setString("nick_name", nickname);
-        gs.setString("belong_group", mygroup);
-        gs.setString("my_icon", myicon);
-        gs.setString("archive_path", path);
-        gs.setString("personal_sign", sign);
-        gs.setString("candidacy_encode", codeset);
-        gs.setString("preference_encode", encode);
-        gs.setString("pal_icon", palicon);
-        gs.setString("panel_font", font);
-        gs.setInt("hide_startup", FLAG_ISSET(flags, 6) ? TRUE : FALSE);
-        gs.setInt("open_transmission", FLAG_ISSET(flags, 5) ? TRUE : FALSE);
-	gs.setInt("use_enter_key", FLAG_ISSET(flags, 4) ? TRUE : FALSE);
-        gs.setInt("clearup_history", FLAG_ISSET(flags, 3) ? TRUE : FALSE);
-        gs.setInt("record_log", FLAG_ISSET(flags, 2) ? TRUE : FALSE);
-        gs.setInt("open_blacklist", FLAG_ISSET(flags, 1) ? TRUE : FALSE);
-        gs.setInt("proof_shared", FLAG_ISSET(flags, 0) ? TRUE : FALSE);
-        gs.setString("trans_tip", transtip);
-        gs.setString("msg_tip", msgtip);
-        gs.setDouble("volume_degree", volume);
-        gs.setInt("transnd_support", FLAG_ISSET(sndfgs, 2) ? TRUE : FALSE);
-        gs.setInt("msgsnd_support", FLAG_ISSET(sndfgs, 1) ? TRUE : FALSE);
-        gs.setInt("sound_support", FLAG_ISSET(sndfgs, 0) ? TRUE : FALSE);
+        gs.setString("nick-name", nickname);
+        gs.setString("belong-group", mygroup);
+        gs.setString("my-icon", myicon);
+        gs.setString("archive-path", path);
+        gs.setString("personal-sign", sign);
+        gs.setString("candidacy-encode", codeset);
+        gs.setString("preference-encode", encode);
+        gs.setString("pal-icon", palicon);
+        gs.setString("panel-font", font);
+        gs.setInt("hide-startup", FLAG_ISSET(flags, 6) ? TRUE : FALSE);
+        gs.setInt("open-transmission", FLAG_ISSET(flags, 5) ? TRUE : FALSE);
+	gs.setInt("use-enter-key", FLAG_ISSET(flags, 4) ? TRUE : FALSE);
+        gs.setInt("clearup-history", FLAG_ISSET(flags, 3) ? TRUE : FALSE);
+        gs.setInt("record-log", FLAG_ISSET(flags, 2) ? TRUE : FALSE);
+        gs.setInt("open-blacklist", FLAG_ISSET(flags, 1) ? TRUE : FALSE);
+        gs.setInt("proof-shared", FLAG_ISSET(flags, 0) ? TRUE : FALSE);
+        gs.setString("trans-tip", transtip);
+        gs.setString("msg-tip", msgtip);
+        gs.setDouble("volume-degree", volume);
+        gs.setInt("transnd-support", FLAG_ISSET(sndfgs, 2) ? TRUE : FALSE);
+        gs.setInt("msgsnd-support", FLAG_ISSET(sndfgs, 1) ? TRUE : FALSE);
+        gs.setInt("sound-support", FLAG_ISSET(sndfgs, 0) ? TRUE : FALSE);
 
         WriteNetSegment(gs);
 }
@@ -179,33 +179,33 @@ char *ProgramData::FindNetSegDescription(in_addr_t ipv4)
 void ProgramData::ReadProgData()
 {
         UseGSettings gs;
-	gs.getSettings("iptux");
+	gs.getSettings("iptux.programdata");
 
-	nickname = gs.getString("nick_name", g_get_user_name());
-	mygroup = gs.getString("belong_group", "");
-        myicon = gs.getString("my_icon", "icon-tux.png");
-	path = gs.getString("archive_path", g_get_home_dir());
-        sign = gs.getString("personal_sign", "");
-	codeset = gs.getString("candidacy_encode", _("utf-16"));
-        encode = gs.getString("preference_encode", _("utf-8"));
-        palicon = gs.getString("pal_icon", "icon-qq.png");
-        font = gs.getString("panel_font", "Sans Serif 10");
+	nickname = gs.getString("nick-name", g_get_user_name());
+	mygroup = gs.getString("belong-group", "");
+        myicon = gs.getString("my-icon", "icon-tux.png");
+	path = gs.getString("archive-path", g_get_home_dir());
+        sign = gs.getString("personal-sign", "");
+	codeset = gs.getString("candidacy-encode", _("utf-16"));
+        encode = gs.getString("preference-encode", _("utf-8"));
+        palicon = gs.getString("pal-icon", "icon-qq.png");
+        font = gs.getString("panel-font", "Sans Serif 10");
 
-        if(gs.getInt("hide_startup") != 0) FLAG_SET(flags, 6);
-        if(gs.getInt("open_transmission") != 0) FLAG_SET(flags, 5);
-        if(gs.getInt("use_enter_key") != 0) FLAG_SET(flags, 4);
-        if(gs.getInt("clearup_history") != 0) FLAG_SET(flags, 3);
-        if(gs.getInt("record_log") != 0) FLAG_SET(flags, 2);
-        if(gs.getInt("open_blacklist") != 0) FLAG_SET(flags, 1);
-        if(gs.getInt("proof_shared") != 0) FLAG_SET(flags, 0);
+        if(gs.getInt("hide-startup") != 0) FLAG_SET(flags, 6);
+        if(gs.getInt("open-transmission") != 0) FLAG_SET(flags, 5);
+        if(gs.getInt("use-enter-key") != 0) FLAG_SET(flags, 4);
+        if(gs.getInt("clearup-history") != 0) FLAG_SET(flags, 3);
+        if(gs.getInt("record-log") != 0) FLAG_SET(flags, 2);
+        if(gs.getInt("open-blacklist") != 0) FLAG_SET(flags, 1);
+        if(gs.getInt("proof-shared") != 0) FLAG_SET(flags, 0);
 
-        msgtip = gs.getString("msg_tip", __SOUND_PATH "/msg.ogg");
-        transtip = gs.getString("trans_tip", __SOUND_PATH "/trans.ogg");
+        msgtip = gs.getString("msg-tip", __SOUND_PATH "/msg.ogg");
+        transtip = gs.getString("trans-tip", __SOUND_PATH "/trans.ogg");
 
-	volume = gs.getDouble("volume_degree");
-	if(gs.getInt("transnd_support") == 0) FLAG_CLR(sndfgs, 2);
-	if(gs.getInt("msgsnd_support") == 0) FLAG_CLR(sndfgs, 1);
-	if(gs.getInt("sound_support") == 0) FLAG_CLR(sndfgs, 0);
+	volume = gs.getDouble("volume-degree");
+	if(gs.getInt("transnd-support") == 0) FLAG_CLR(sndfgs, 2);
+	if(gs.getInt("msgsnd-support") == 0) FLAG_CLR(sndfgs, 1);
+	if(gs.getInt("sound-support") == 0) FLAG_CLR(sndfgs, 0);
 
         ReadNetSegment(gs);
 }
@@ -337,7 +337,7 @@ void ProgramData::WriteNetSegment(UseGSettings &gs)
                 tlist = g_slist_next(tlist);
         }
 	pList[i] = NULL;
-        gs.setStrV("scan_net_segment", pList);
+        gs.setStrV("scan-net-segment", pList);
         pthread_mutex_unlock(&mutex);
 	delete [] pList;
 }
@@ -349,7 +349,7 @@ void ProgramData::WriteNetSegment(UseGSettings &gs)
 void ProgramData::ReadNetSegment(UseGSettings &gs)
 {
         NetSegment *ns;
-	char **pList = gs.getStrV("scan_net_segment");
+	char **pList = gs.getStrV("scan-net-segment");
 	
         pthread_mutex_lock(&mutex);
         for(int i = 0; pList[i]; i += 3)

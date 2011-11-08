@@ -15,6 +15,7 @@
 #include "CoreThread.h"
 #include "MainWindow.h"
 #include "LogSystem.h"
+#include "UseGSettings.h"
 #include "Command.h"
 #include "SendFile.h"
 #include "HelpDialog.h"
@@ -206,36 +207,25 @@ void DialogGroup::InitSublayerSpecify()
  */
 void DialogGroup::ReadUILayout()
 {
-        GConfClient *client;
         gint numeric;
+	UseGSettings gs;
+	gs.getSettings("iptux.dialoggroup");
 
-        client = gconf_client_get_default();
-
-        numeric = gconf_client_get_int(client, GCONF_PATH "/group_window_width", NULL);
+        numeric = gs.getInt("group-window-width");
         numeric = numeric ? numeric : 550;
         g_datalist_set_data(&dtset, "window-width", GINT_TO_POINTER(numeric));
-        numeric = gconf_client_get_int(client, GCONF_PATH "/group_window_height", NULL);
+        numeric = gs.getInt("group-window-height");
         numeric = numeric ? numeric : 500;
         g_datalist_set_data(&dtset, "window-height", GINT_TO_POINTER(numeric));
-
-        numeric = gconf_client_get_int(client,
-                         GCONF_PATH "/group_main_paned_divide", NULL);
+        numeric = gs.getInt("group-main-paned-divide");
         numeric = numeric ? numeric : 150;
         g_datalist_set_data(&dtset, "main-paned-divide", GINT_TO_POINTER(numeric));
-
-        numeric = gconf_client_get_int(client,
-                         GCONF_PATH "/group_historyinput_paned_divide", NULL);
+        numeric = gs.getInt("group-historyinput-paned-divide");
         numeric = numeric ? numeric : 320;
-        g_datalist_set_data(&dtset, "historyinput-paned-divide",
-                                         GINT_TO_POINTER(numeric));
-
-        numeric = gconf_client_get_int(client,
-                         GCONF_PATH "/group_memberenclosure_paned_divide", NULL);
+        g_datalist_set_data(&dtset, "historyinput-paned-divide", GINT_TO_POINTER(numeric));
+        numeric = gs.getInt("group-memberenclosure-paned-divide");
         numeric = numeric ? numeric : 320;
-        g_datalist_set_data(&dtset, "memberenclosure-paned-divide",
-                                         GINT_TO_POINTER(numeric));
-
-        g_object_unref(client);
+        g_datalist_set_data(&dtset, "memberenclosure-paned-divide", GINT_TO_POINTER(numeric));
 }
 
 /**
@@ -243,31 +233,20 @@ void DialogGroup::ReadUILayout()
  */
 void DialogGroup::SaveUILayout()
 {
-        GConfClient *client;
         gint numeric;
-
-        client = gconf_client_get_default();
+	UseGSettings gs;
+	gs.getSettings("iptux.dialoggroup");
 
         numeric = GPOINTER_TO_INT(g_datalist_get_data(&dtset, "window-width"));
-        gconf_client_set_int(client, GCONF_PATH "/group_window_width", numeric, NULL);
+        gs.setInt("group-window-width", numeric);
         numeric = GPOINTER_TO_INT(g_datalist_get_data(&dtset, "window-height"));
-        gconf_client_set_int(client, GCONF_PATH "/group_window_height", numeric, NULL);
-
+        gs.setInt("group-window-height", numeric);
         numeric = GPOINTER_TO_INT(g_datalist_get_data(&dtset, "main-paned-divide"));
-        gconf_client_set_int(client, GCONF_PATH "/group_main_paned_divide",
-                                                         numeric, NULL);
-
-        numeric = GPOINTER_TO_INT(g_datalist_get_data(&dtset,
-                                 "historyinput-paned-divide"));
-        gconf_client_set_int(client, GCONF_PATH "/group_historyinput_paned_divide",
-                                                                 numeric, NULL);
-
-        numeric = GPOINTER_TO_INT(g_datalist_get_data(&dtset,
-                                 "memberenclosure-paned-divide"));
-        gconf_client_set_int(client, GCONF_PATH "/group_memberenclosure_paned_divide",
-                                                                         numeric, NULL);
-
-        g_object_unref(client);
+        gs.setInt("group-main-paned-divide", numeric);
+        numeric = GPOINTER_TO_INT(g_datalist_get_data(&dtset, "historyinput-paned-divide"));
+        gs.setInt("group-historyinput-paned-divide", numeric);
+        numeric = GPOINTER_TO_INT(g_datalist_get_data(&dtset, "memberenclosure-paned-divide"));
+        gs.setInt("group-memberenclosure-paned-divide", numeric);
 }
 
 /**
