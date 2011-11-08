@@ -46,9 +46,9 @@ int main(int argc, char *argv[])
 
         analysis_parameter(argc, argv);
         iptux_init();
+        cthrd.CoreThreadEntry();
         sicon.CreateStatusIcon();
         mwin.CreateWindow();
-        cthrd.CoreThreadEntry();
 
         gtk_main();
         gdk_threads_leave();

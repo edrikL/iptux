@@ -186,8 +186,8 @@ void ProgramData::ReadProgData()
         myicon = gs.getString("my-icon", "icon-tux.png");
 	path = gs.getString("archive-path", g_get_home_dir());
         sign = gs.getString("personal-sign", "");
-	codeset = gs.getString("candidacy-encode", _("utf-16"));
-        encode = gs.getString("preference-encode", _("utf-8"));
+	codeset = gs.getString("candidacy-encode", "utf-16");
+        encode = gs.getString("preference-encode", "utf-8");
         palicon = gs.getString("pal-icon", "icon-qq.png");
         font = gs.getString("panel-font", "Sans Serif 10");
 

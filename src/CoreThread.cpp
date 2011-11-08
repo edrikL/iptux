@@ -864,6 +864,7 @@ void CoreThread::InitThemeSublayerData()
         gtk_icon_theme_append_search_path(theme, __PIXMAPS_PATH "/icon");
         gtk_icon_theme_append_search_path(theme, __PIXMAPS_PATH "/menu");
         gtk_icon_theme_append_search_path(theme, __PIXMAPS_PATH "/tip");
+        gtk_icon_theme_append_search_path(theme, __LOGO_PATH "/hicolor/64x64/apps");
 
         factory = gtk_icon_factory_new();
         gtk_icon_factory_add_default(factory);
