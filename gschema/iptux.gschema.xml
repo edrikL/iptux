@@ -19,7 +19,7 @@
       <default>""</default>
     </key>
     <key name="candidacy-encode" type="s">
-      <default>"utf-16"</default>
+      <default>"gb18030"</default>
     </key>
     <key name="preference-encode" type="s">
       <default>"utf-8"</default>
@@ -36,35 +36,35 @@
     <key name="trans-tip" type="s">
       <default>""</default>
     </key>
-    <key name="hide-startup" type="i">
-      <default>0</default>
+    <key name="hide-startup" type="b">
+      <default>false</default>
     </key>
-    <key name="open-transmission" type="i">
-      <default>0</default>
+    <key name="open-transmission" type="b">
+      <default>false</default>
     </key>
-    <key name="use-enter-key" type="i">
-      <default>0</default>
+    <key name="use-enter-key" type="b">
+      <default>false</default>
     </key>
-    <key name="clearup-history" type="i">
-      <default>0</default>
+    <key name="clearup-history" type="b">
+      <default>false</default>
     </key>
-    <key name="record-log" type="i">
-      <default>0</default>
+    <key name="record-log" type="b">
+      <default>false</default>
     </key>
-    <key name="open-blacklist" type="i">
-      <default>0</default>
+    <key name="open-blacklist" type="b">
+      <default>false</default>
     </key>
-    <key name="proof-shared" type="i">
-      <default>0</default>
+    <key name="proof-shared" type="b">
+      <default>false</default>
     </key>
-    <key name="transnd-support" type="i">
-      <default>0</default>
+    <key name="transnd-support" type="b">
+      <default>false</default>
     </key>
-    <key name="msgsnd-support" type="i">
-      <default>0</default>
+    <key name="msgsnd-support" type="b">
+      <default>false</default>
     </key>
-    <key name="sound-support" type="i">
-      <default>0</default>
+    <key name="sound-support" type="b">
+      <default>false</default>
     </key>
     <key name="volume-degree" type="d">
       <default>0</default>

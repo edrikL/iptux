@@ -62,4 +62,8 @@ char *ipmsg_get_filename_pal(const char *pathname);
 char *ipmsg_get_filename_me(const char *pathname, char **path);
 char *iptux_erase_filename_suffix(const char *filename);
 
+/* GSettings相关方法 */
+void init_gsettings(const char *sPath = NULL);
+GSettings *get_gsettings(const char *sSchema, const char *sFileName = NULL);
+
 #endif

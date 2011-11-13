@@ -15,7 +15,6 @@
 #include "CoreThread.h"
 #include "MainWindow.h"
 #include "LogSystem.h"
-#include "UseGSettings.h"
 #include "Command.h"
 #include "SendFile.h"
 #include "HelpDialog.h"
@@ -208,24 +207,25 @@ void DialogGroup::InitSublayerSpecify()
 void DialogGroup::ReadUILayout()
 {
         gint numeric;
-	UseGSettings gs;
-	gs.getSettings("iptux.dialoggroup");
+	GSettings *pSettings = get_gsettings("iptux.dialoggroup");
 
-        numeric = gs.getInt("group-window-width");
+        numeric = g_settings_get_int(pSettings, "group-window-width");
         numeric = numeric ? numeric : 550;
         g_datalist_set_data(&dtset, "window-width", GINT_TO_POINTER(numeric));
-        numeric = gs.getInt("group-window-height");
+        numeric = g_settings_get_int(pSettings, "group-window-height");
         numeric = numeric ? numeric : 500;
         g_datalist_set_data(&dtset, "window-height", GINT_TO_POINTER(numeric));
-        numeric = gs.getInt("group-main-paned-divide");
+        numeric = g_settings_get_int(pSettings, "group-main-paned-divide");
         numeric = numeric ? numeric : 150;
         g_datalist_set_data(&dtset, "main-paned-divide", GINT_TO_POINTER(numeric));
-        numeric = gs.getInt("group-historyinput-paned-divide");
+        numeric = g_settings_get_int(pSettings, "group-historyinput-paned-divide");
         numeric = numeric ? numeric : 320;
         g_datalist_set_data(&dtset, "historyinput-paned-divide", GINT_TO_POINTER(numeric));
-        numeric = gs.getInt("group-memberenclosure-paned-divide");
+        numeric = g_settings_get_int(pSettings, "group-memberenclosure-paned-divide");
         numeric = numeric ? numeric : 320;
         g_datalist_set_data(&dtset, "memberenclosure-paned-divide", GINT_TO_POINTER(numeric));
+
+	g_object_unref(pSettings);
 }
 
 /**
@@ -234,19 +234,20 @@ void DialogGroup::ReadUILayout()
 void DialogGroup::SaveUILayout()
 {
         gint numeric;
-	UseGSettings gs;
-	gs.getSettings("iptux.dialoggroup");
+	GSettings *pSettings = get_gsettings("iptux.dialoggroup");
 
         numeric = GPOINTER_TO_INT(g_datalist_get_data(&dtset, "window-width"));
-        gs.setInt("group-window-width", numeric);
+        g_settings_set_int(pSettings, "group-window-width", numeric);
         numeric = GPOINTER_TO_INT(g_datalist_get_data(&dtset, "window-height"));
-        gs.setInt("group-window-height", numeric);
+        g_settings_set_int(pSettings, "group-window-height", numeric);
         numeric = GPOINTER_TO_INT(g_datalist_get_data(&dtset, "main-paned-divide"));
-        gs.setInt("group-main-paned-divide", numeric);
+        g_settings_set_int(pSettings, "group-main-paned-divide", numeric);
         numeric = GPOINTER_TO_INT(g_datalist_get_data(&dtset, "historyinput-paned-divide"));
-        gs.setInt("group-historyinput-paned-divide", numeric);
+        g_settings_set_int(pSettings, "group-historyinput-paned-divide", numeric);
         numeric = GPOINTER_TO_INT(g_datalist_get_data(&dtset, "memberenclosure-paned-divide"));
-        gs.setInt("group-memberenclosure-paned-divide", numeric);
+        g_settings_set_int(pSettings, "group-memberenclosure-paned-divide", numeric);
+
+	g_object_unref(pSettings);
 }
 
 /**

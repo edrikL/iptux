@@ -560,3 +560,46 @@ char *iptux_erase_filename_suffix(const char *filename)
 
         return file;
 }
+
+/**
+ * 初始化环境变量。
+ * @param sPath /glib-2.0/schemas/gschemas.compiled的安装路径，如果为NULL，则默认为__DATA_PATH。
+ * @note GSettings需要读取XDG_DATA_DIRS下的/glib-2.0/schemas/gschemas.compiled。
+ */
+void init_gsettings(const char *sPath)
+{
+     gchar sEnv[MAX_PATHLEN];
+     if(sPath)
+     {
+	  g_sprintf(sEnv, "%s:%s", sPath, g_getenv("XDG_DATA_DIRS"));
+     }
+     else
+     {
+	  g_sprintf(sEnv, "%s:%s", __DATA_PATH, g_getenv("XDG_DATA_DIRS"));
+     }
+     g_setenv("XDG_DATA_DIRS", sEnv, true);
+}
+
+/**
+ * 获取当前用户的配置信息。
+ * @param sSchema 用户配置项的名称。
+ * @param sFileName 配置文件的全路径，如果为NULL，则默认为用户配置路径下的/$PACKAGE_NAME/settings.ini。
+ */
+GSettings *get_gsettings(const char *sSchema, const char *sFileName)
+{
+     GSettings *pSettings;
+     GSettingsBackend *pBkend;
+     if(sFileName)
+     {
+	  pBkend = g_keyfile_settings_backend_new(sFileName, "/", NULL);
+     }
+     else
+     {
+	  gchar sSettingsFile[MAX_PATHLEN];
+	  g_sprintf(sSettingsFile, "%s/%s/settings.ini", g_get_user_config_dir(), PACKAGE_NAME);
+	  pBkend = g_keyfile_settings_backend_new(sSettingsFile, "/", NULL);
+     }
+     pSettings = g_settings_new_with_backend(sSchema, pBkend);
+     g_object_unref(pBkend);
+     return pSettings;
+}

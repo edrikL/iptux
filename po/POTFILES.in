@@ -30,4 +30,3 @@ src/uninstall/ihateiptux.cpp
 src/uninstall/utils.cpp
 src/utils.cpp
 src/wrapper.cpp
-src/UseGSettings.cpp

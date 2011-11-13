@@ -14,7 +14,6 @@
 #include "CoreThread.h"
 #include "MainWindow.h"
 #include "LogSystem.h"
-#include "UseGSettings.h"
 #include "Command.h"
 #include "SendFile.h"
 #include "HelpDialog.h"
@@ -126,24 +125,25 @@ void DialogPeer::ClearAllPalData()
 void DialogPeer::ReadUILayout()
 {
         gint numeric;
-	UseGSettings gs;
-	gs.getSettings("iptux.dialogpeer");
+	GSettings *pSettings = get_gsettings("iptux.dialogpeer");
 
-        numeric = gs.getInt("peer-window-width");
+        numeric = g_settings_get_int(pSettings, "peer-window-width");
         numeric = numeric ? numeric : 570;
         g_datalist_set_data(&dtset, "window-width", GINT_TO_POINTER(numeric));
-        numeric = gs.getInt("peer-window-height");
+        numeric = g_settings_get_int(pSettings, "peer-window-height");
         numeric = numeric ? numeric : 420;
         g_datalist_set_data(&dtset, "window-height", GINT_TO_POINTER(numeric));
-        numeric = gs.getInt("peer-main-paned-divide");
+        numeric = g_settings_get_int(pSettings, "peer-main-paned-divide");
         numeric = numeric ? numeric : 375;
         g_datalist_set_data(&dtset, "main-paned-divide", GINT_TO_POINTER(numeric));
-        numeric = gs.getInt("peer-historyinput-paned-divide");
+        numeric = g_settings_get_int(pSettings, "peer-historyinput-paned-divide");
         numeric = numeric ? numeric : 255;
         g_datalist_set_data(&dtset, "historyinput-paned-divide", GINT_TO_POINTER(numeric));
-        numeric = gs.getInt("peer-infoenclosure-paned-divide");
+        numeric = g_settings_get_int(pSettings, "peer-infoenclosure-paned-divide");
         numeric = numeric ? numeric : 255;
         g_datalist_set_data(&dtset, "infoenclosure-paned-divide", GINT_TO_POINTER(numeric));
+
+	g_object_unref(pSettings);
 }
 
 /**
@@ -152,19 +152,20 @@ void DialogPeer::ReadUILayout()
 void DialogPeer::WriteUILayout()
 {
         gint numeric;
-	UseGSettings gs;
-	gs.getSettings("iptux.dialogpeer");
+	GSettings *pSettings = get_gsettings("iptux.dialogpeer");
 
         numeric = GPOINTER_TO_INT(g_datalist_get_data(&dtset, "window-width"));
-        gs.setInt("peer-window-width", numeric);
+        g_settings_set_int(pSettings, "peer-window-width", numeric);
         numeric = GPOINTER_TO_INT(g_datalist_get_data(&dtset, "window-height"));
-        gs.setInt("peer-window-height", numeric);
+        g_settings_set_int(pSettings, "peer-window-height", numeric);
         numeric = GPOINTER_TO_INT(g_datalist_get_data(&dtset, "main-paned-divide"));
-        gs.setInt("peer-main-paned-divide", numeric);
+        g_settings_set_int(pSettings, "peer-main-paned-divide", numeric);
         numeric = GPOINTER_TO_INT(g_datalist_get_data(&dtset, "historyinput-paned-divide"));
-        gs.setInt("peer-historyinput-paned-divide", numeric);
+        g_settings_set_int(pSettings, "peer-historyinput-paned-divide", numeric);
         numeric = GPOINTER_TO_INT(g_datalist_get_data(&dtset, "infoenclosure-paned-divide"));
-        gs.setInt("peer-infoenclosure-paned-divide", numeric);
+        g_settings_set_int(pSettings, "peer-infoenclosure-paned-divide", numeric);
+
+	g_object_unref(pSettings);
 }
 
 
@@ -322,6 +323,12 @@ GtkWidget *DialogPeer::CreateFileMenu()
         gtk_widget_add_accelerator(menuitem, "activate", accel,
                                    GDK_D, GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE);
 
+        menuitem = gtk_menu_item_new_with_label(_("Remove Selected"));
+        gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitem);
+        g_signal_connect_swapped(menuitem, "activate", G_CALLBACK(RemoveSelectedEnclosure), this);
+        gtk_widget_add_accelerator(menuitem, "activate", accel,
+                                   GDK_R, GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE);
+
         menuitem = gtk_menu_item_new_with_label(_("Request Shared Resources"));
         gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitem);
         g_signal_connect_swapped(menuitem, "activate",
@@ -339,6 +346,7 @@ GtkWidget *DialogPeer::CreateFileMenu()
         gtk_widget_add_accelerator(menuitem, "activate", accel,
                                    GDK_W, GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE);
 
+        g_datalist_set_data(&widset, "file-menu",menu);
         return menushell;
 
 }

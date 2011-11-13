@@ -13,7 +13,6 @@
 #include "ProgramData.h"
 #include "MainWindow.h"
 #include "LogSystem.h"
-#include "UseGSettings.h"
 #include "UdpData.h"
 #include "TcpData.h"
 #include "Command.h"
@@ -72,10 +71,9 @@ void CoreThread::CoreThreadEntry()
  */
 void CoreThread::WriteSharedData()
 {
-	UseGSettings gs;
-	gs.getSettings("iptux.corethread");
+	GSettings *pSettings = get_gsettings("iptux.corethread");
         GSList *tlist = pblist;
-	char **pList = new char *[g_slist_length(tlist) + 1];
+	gchar **pList = new char *[g_slist_length(tlist) + 1];
 	int i = 0;
         while (tlist) {
 		pList[i] = ((FileInfo *)tlist->data)->filepath;
@@ -83,9 +81,10 @@ void CoreThread::WriteSharedData()
                 tlist = g_slist_next(tlist);
         }
 	pList[i] = NULL;
-	gs.setStrV("shared-file-list", pList);
+	g_settings_set_strv(pSettings, "shared-file-list", pList);
+        if(passwd) g_settings_set_string(pSettings, "access-shared-limit", passwd);
 	delete [] pList;
-        if(passwd) gs.setString("access-shared-limit", passwd);
+	g_object_unref(pSettings);
 }
 
 /**
@@ -890,10 +889,9 @@ void CoreThread::ReadSharedData()
 {
         FileInfo *file;
         struct stat64 st;
-	UseGSettings gs;
-	gs.getSettings("iptux.corethread");
-	char **pList = gs.getStrV("shared-file-list");
-	passwd = gs.getString("access-shared-limit");
+	GSettings *pSettings = get_gsettings("iptux.corethread");
+	gchar **pList = g_settings_get_strv(pSettings, "shared-file-list");
+	passwd = g_settings_get_string(pSettings, "access-shared-limit");
 
         /* 分析数据并加入文件链表 */
 	for(int i = 0; pList[i]; i ++)
@@ -914,6 +912,7 @@ void CoreThread::ReadSharedData()
                 file->filepath = pList[i];
         }
 	delete [] pList;
+	g_object_unref(pSettings);
 }
 
 /**
