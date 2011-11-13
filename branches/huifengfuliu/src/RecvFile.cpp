@@ -12,7 +12,6 @@
 #include "RecvFile.h"
 #include "RecvFileData.h"
 #include "ProgramData.h"
-#include "UseGSettings.h"
 #include "callback.h"
 #include "utils.h"
 extern ProgramData progdt;
@@ -90,15 +89,16 @@ void RecvFile::ClearSublayer()
 void RecvFile::ReadUILayout()
 {
         gint numeric;
-	UseGSettings gs;
-	gs.getSettings("iptux.recvfile");
+	GSettings *pSettings = get_gsettings("iptux.recvfile");
 
-        numeric = gs.getInt("recv-window-width");
+        numeric = g_settings_get_int(pSettings, "recv-window-width");
         numeric = numeric ? numeric : 500;
         g_datalist_set_data(&dtset, "window-width", GINT_TO_POINTER(numeric));
-        numeric = gs.getInt("recv-window-height");
+        numeric = g_settings_get_int(pSettings, "recv-window-height");
         numeric = numeric ? numeric : 350;
         g_datalist_set_data(&dtset, "window-height", GINT_TO_POINTER(numeric));
+
+	g_object_unref(pSettings);
 }
 
 /**
@@ -107,13 +107,14 @@ void RecvFile::ReadUILayout()
 void RecvFile::WriteUILayout()
 {
         gint numeric;
-	UseGSettings gs;
-	gs.getSettings("iptux.recvfile");
+	GSettings *pSettings = get_gsettings("iptux.recvfile");
 
         numeric = GPOINTER_TO_INT(g_datalist_get_data(&dtset, "window-width"));
-        gs.setInt("recv-window-width", numeric);
+        g_settings_set_int(pSettings, "recv-window-width", numeric);
         numeric = GPOINTER_TO_INT(g_datalist_get_data(&dtset, "window-height"));
-        gs.setInt("recv-window-height", numeric);
+        g_settings_set_int(pSettings, "recv-window-height", numeric);
+
+	g_object_unref(pSettings);
 }
 
 /**

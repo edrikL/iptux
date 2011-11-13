@@ -76,15 +76,13 @@ int AnalogFS::open(const char *fn, int flags, ...)
         mergepath(tpath, fn);
         va_start(ap, flags);
         if ((flags & O_ACCMODE) == O_WRONLY) {
-                tfn = assert_filename_inexist(tpath);
-                if ((fd = ::open(tfn, flags, va_arg(ap, mode_t))) == -1)
-                        pwarning(_("Open() file \"%s\" failed, %s"), tfn,
-                                                         strerror(errno));
-                g_free(tfn);
+	        tfn = assert_filename_inexist(tpath);
+		if ((fd = ::open(tfn, flags, (mode_t)va_arg(ap, int))) == -1)
+		        pwarning(_("Open() file \"%s\" failed, %s"), tfn, strerror(errno));
+		g_free(tfn);
         } else {
-                if ((fd = ::open(tpath, flags, va_arg(ap, mode_t))) == -1)
-                        pwarning(_("Open() file \"%s\" failed, %s"), tpath,
-                                                         strerror(errno));
+	        if ((fd = ::open(tpath, flags, (mode_t)va_arg(ap, int))) == -1)
+		        pwarning(_("Open() file \"%s\" failed, %s"), tpath, strerror(errno));
         }
         va_end(ap);
 

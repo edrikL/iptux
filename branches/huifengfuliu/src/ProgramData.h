@@ -15,7 +15,7 @@
 #include "sys.h"
 #include "net.h"
 #include "deplib.h"
-#include "UseGSettings.h"
+#include "utils.h"
 
 /* flags
 // 图标(:6);程序启动后只显示托盘图标而不显示面板
@@ -63,22 +63,22 @@ public:
         GdkCursor *xcursor, *lcursor;   //光标
         GtkTextTagTable *table; //tag table
 
-        guint cnxnid;           //GConfClient连接ID
         struct timeval timestamp;       //程序数据时间戳
         pthread_mutex_t mutex;  //锁
 private:
         void ReadProgData();
-        void AddGconfNotify();
+        void AddGSettingsNotify();
         void CheckIconTheme();
         void CreateRegex();
         void CreateCursor();
         void CreateTagTable();
 
-        void WriteNetSegment(UseGSettings &gs);
-        void ReadNetSegment(UseGSettings &gs);
-private:
-//        static void GconfNotifyFunc(GConfClient *client, guint cnxnid,
-//                                 GConfEntry *entry, ProgramData *progdt);
+        void WriteNetSegment(GSettings *pSettings);
+        void ReadNetSegment(GSettings *pSettings);
+
+        static void GSettingsOnKeyChanged(GSettings *pSettings, const gchar *sKey);
+
+	GSettings *settings;  //GSettings
 };
 
 #endif

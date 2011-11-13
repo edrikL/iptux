@@ -9,9 +9,13 @@
 // Copyright: See COPYING file that comes with this distribution
 //
 //
+#include <string.h>
+
 #include "ProgramData.h"
 #include "CoreThread.h"
 #include "utils.h"
+
+extern ProgramData progdt;
 
 /**
  * 类构造函数.
@@ -20,7 +24,7 @@ ProgramData::ProgramData():nickname(NULL), mygroup(NULL),
  myicon(NULL), path(NULL),  sign(NULL), codeset(NULL), encode(NULL),
  palicon(NULL), font(NULL), flags(0), transtip(NULL), msgtip(NULL),
  volume(1.0), sndfgs(~0), netseg(NULL), urlregex(NULL), xcursor(NULL),
- lcursor(NULL), table(NULL), cnxnid(0)
+ lcursor(NULL), table(NULL), settings(NULL)
 {
         gettimeofday(&timestamp, NULL);
         pthread_mutex_init(&mutex, NULL);
@@ -31,8 +35,6 @@ ProgramData::ProgramData():nickname(NULL), mygroup(NULL),
  */
 ProgramData::~ProgramData()
 {
-//        GSettings *settings;
-     
         g_free(nickname);
         g_free(mygroup);
         g_free(myicon);
@@ -59,13 +61,8 @@ ProgramData::~ProgramData()
                 gdk_cursor_unref(lcursor);
         if (table)
                 g_object_unref(table);
-/*
-        if (cnxnid > 0) {
-                client = gconf_client_get_default();
-                gconf_client_notify_remove(client, cnxnid);
-                g_object_unref(client);
-        }
-*/
+        if (settings)
+	        g_object_unref(settings);
         pthread_mutex_destroy(&mutex);
 }
 
@@ -74,8 +71,8 @@ ProgramData::~ProgramData()
  */
 void ProgramData::InitSublayer()
 {
+        AddGSettingsNotify();
         ReadProgData();
-        AddGconfNotify();
         CheckIconTheme();
         CreateRegex();
         CreateCursor();
@@ -87,34 +84,32 @@ void ProgramData::InitSublayer()
  */
 void ProgramData::WriteProgData()
 {
-        UseGSettings gs;
-	gs.getSettings("iptux.programdata");
         gettimeofday(&timestamp, NULL); //更新时间戳
 
-        gs.setString("nick-name", nickname);
-        gs.setString("belong-group", mygroup);
-        gs.setString("my-icon", myicon);
-        gs.setString("archive-path", path);
-        gs.setString("personal-sign", sign);
-        gs.setString("candidacy-encode", codeset);
-        gs.setString("preference-encode", encode);
-        gs.setString("pal-icon", palicon);
-        gs.setString("panel-font", font);
-        gs.setInt("hide-startup", FLAG_ISSET(flags, 6) ? TRUE : FALSE);
-        gs.setInt("open-transmission", FLAG_ISSET(flags, 5) ? TRUE : FALSE);
-	gs.setInt("use-enter-key", FLAG_ISSET(flags, 4) ? TRUE : FALSE);
-        gs.setInt("clearup-history", FLAG_ISSET(flags, 3) ? TRUE : FALSE);
-        gs.setInt("record-log", FLAG_ISSET(flags, 2) ? TRUE : FALSE);
-        gs.setInt("open-blacklist", FLAG_ISSET(flags, 1) ? TRUE : FALSE);
-        gs.setInt("proof-shared", FLAG_ISSET(flags, 0) ? TRUE : FALSE);
-        gs.setString("trans-tip", transtip);
-        gs.setString("msg-tip", msgtip);
-        gs.setDouble("volume-degree", volume);
-        gs.setInt("transnd-support", FLAG_ISSET(sndfgs, 2) ? TRUE : FALSE);
-        gs.setInt("msgsnd-support", FLAG_ISSET(sndfgs, 1) ? TRUE : FALSE);
-        gs.setInt("sound-support", FLAG_ISSET(sndfgs, 0) ? TRUE : FALSE);
+        g_settings_set_string(settings, "nick-name", nickname);
+        g_settings_set_string(settings, "belong-group", mygroup);
+        g_settings_set_string(settings, "my-icon", myicon);
+        g_settings_set_string(settings, "archive-path", path);
+        g_settings_set_string(settings, "personal-sign", sign);
+        g_settings_set_string(settings, "candidacy-encode", codeset);
+        g_settings_set_string(settings, "preference-encode", encode);
+        g_settings_set_string(settings, "pal-icon", palicon);
+        g_settings_set_string(settings, "panel-font", font);
+        g_settings_set_boolean(settings, "hide-startup", FLAG_ISSET(flags, 6) ? TRUE : FALSE);
+        g_settings_set_boolean(settings, "open-transmission", FLAG_ISSET(flags, 5) ? TRUE : FALSE);
+	g_settings_set_boolean(settings, "use-enter-key", FLAG_ISSET(flags, 4) ? TRUE : FALSE);
+        g_settings_set_boolean(settings, "clearup-history", FLAG_ISSET(flags, 3) ? TRUE : FALSE);
+        g_settings_set_boolean(settings, "record-log", FLAG_ISSET(flags, 2) ? TRUE : FALSE);
+        g_settings_set_boolean(settings, "open-blacklist", FLAG_ISSET(flags, 1) ? TRUE : FALSE);
+        g_settings_set_boolean(settings, "proof-shared", FLAG_ISSET(flags, 0) ? TRUE : FALSE);
+        g_settings_set_string(settings, "trans-tip", transtip);
+        g_settings_set_string(settings, "msg-tip", msgtip);
+        g_settings_set_double(settings, "volume-degree", volume);
+        g_settings_set_boolean(settings, "transnd-support", FLAG_ISSET(sndfgs, 2) ? TRUE : FALSE);
+        g_settings_set_boolean(settings, "msgsnd-support", FLAG_ISSET(sndfgs, 1) ? TRUE : FALSE);
+        g_settings_set_boolean(settings, "sound-support", FLAG_ISSET(sndfgs, 0) ? TRUE : FALSE);
 
-        WriteNetSegment(gs);
+        WriteNetSegment(settings);
 }
 
 /**
@@ -178,51 +173,53 @@ char *ProgramData::FindNetSegDescription(in_addr_t ipv4)
  */
 void ProgramData::ReadProgData()
 {
-        UseGSettings gs;
-	gs.getSettings("iptux.programdata");
+	nickname = g_settings_get_string(settings, "nick-name");
+	if(strlen(nickname) == 0) nickname = g_strdup(g_get_user_name());
+	mygroup = g_settings_get_string(settings, "belong-group");
+	if(strlen(mygroup) == 0) mygroup = g_strdup("");
+        myicon = g_settings_get_string(settings, "my-icon");
+	if(strlen(myicon) == 0) myicon = g_strdup("icon-tux.png");
+	path = g_settings_get_string(settings, "archive-path");
+	if(strlen(path) == 0) path = g_strdup(g_get_home_dir());
+        sign = g_settings_get_string(settings, "personal-sign");
+	if(strlen(sign) == 0) sign = g_strdup("");
+	codeset = g_settings_get_string(settings, "candidacy-encode");
+	if(strlen(codeset) == 0) codeset = g_strdup("utf-16");
+        encode = g_settings_get_string(settings, "preference-encode");
+	if(strlen(encode) == 0) encode = g_strdup("utf-8");
+        palicon = g_settings_get_string(settings, "pal-icon");
+	if(strlen(palicon) == 0) palicon = g_strdup("icon-qq.png");
+        font = g_settings_get_string(settings, "panel-font");
+	if(strlen(font) == 0) font = g_strdup("Sans Serif 10");
 
-	nickname = gs.getString("nick-name", g_get_user_name());
-	mygroup = gs.getString("belong-group", "");
-        myicon = gs.getString("my-icon", "icon-tux.png");
-	path = gs.getString("archive-path", g_get_home_dir());
-        sign = gs.getString("personal-sign", "");
-	codeset = gs.getString("candidacy-encode", "utf-16");
-        encode = gs.getString("preference-encode", "utf-8");
-        palicon = gs.getString("pal-icon", "icon-qq.png");
-        font = gs.getString("panel-font", "Sans Serif 10");
+        if(g_settings_get_boolean(settings, "hide-startup")) FLAG_SET(flags, 6);
+        if(g_settings_get_boolean(settings, "open-transmission")) FLAG_SET(flags, 5);
+        if(g_settings_get_boolean(settings, "use-enter-key")) FLAG_SET(flags, 4);
+        if(g_settings_get_boolean(settings, "clearup-history")) FLAG_SET(flags, 3);
+        if(g_settings_get_boolean(settings, "record-log")) FLAG_SET(flags, 2);
+        if(g_settings_get_boolean(settings, "open-blacklist")) FLAG_SET(flags, 1);
+        if(g_settings_get_boolean(settings, "proof-shared")) FLAG_SET(flags, 0);
 
-        if(gs.getInt("hide-startup") != 0) FLAG_SET(flags, 6);
-        if(gs.getInt("open-transmission") != 0) FLAG_SET(flags, 5);
-        if(gs.getInt("use-enter-key") != 0) FLAG_SET(flags, 4);
-        if(gs.getInt("clearup-history") != 0) FLAG_SET(flags, 3);
-        if(gs.getInt("record-log") != 0) FLAG_SET(flags, 2);
-        if(gs.getInt("open-blacklist") != 0) FLAG_SET(flags, 1);
-        if(gs.getInt("proof-shared") != 0) FLAG_SET(flags, 0);
+        msgtip = g_settings_get_string(settings, "msg-tip");
+	if(strlen(msgtip) == 0) msgtip = g_strdup(__SOUND_PATH "/msg.ogg");
+        transtip = g_settings_get_string(settings, "trans-tip");
+	if(strlen(transtip) == 0) transtip = g_strdup(__SOUND_PATH "/trans.ogg");
 
-        msgtip = gs.getString("msg-tip", __SOUND_PATH "/msg.ogg");
-        transtip = gs.getString("trans-tip", __SOUND_PATH "/trans.ogg");
+	volume = g_settings_get_double(settings, "volume-degree");
+	if(!g_settings_get_boolean(settings, "transnd-support")) FLAG_CLR(sndfgs, 2);
+	if(!g_settings_get_boolean(settings, "msgsnd-support")) FLAG_CLR(sndfgs, 1);
+	if(!g_settings_get_boolean(settings, "sound-support")) FLAG_CLR(sndfgs, 0);
 
-	volume = gs.getDouble("volume-degree");
-	if(gs.getInt("transnd-support") == 0) FLAG_CLR(sndfgs, 2);
-	if(gs.getInt("msgsnd-support") == 0) FLAG_CLR(sndfgs, 1);
-	if(gs.getInt("sound-support") == 0) FLAG_CLR(sndfgs, 0);
-
-        ReadNetSegment(gs);
+        ReadNetSegment(settings);
 }
 
 /**
  * 监视程序配置文件信息数据的变更.
  */
-void ProgramData::AddGconfNotify()
+void ProgramData::AddGSettingsNotify()
 {
-/*        GConfClient *client;
-
-        client = gconf_client_get_default();
-        gconf_client_add_dir(client, GCONF_PATH, GCONF_CLIENT_PRELOAD_NONE, NULL);
-        cnxnid = gconf_client_notify_add(client, GCONF_PATH,
-                 GConfClientNotifyFunc(GconfNotifyFunc), this, NULL, NULL);
-        g_object_unref(client);
-*/
+     settings = get_gsettings("iptux.programdata");
+     g_signal_connect(settings, "changed", G_CALLBACK(GSettingsOnKeyChanged), NULL);
 }
 
 /**
@@ -317,16 +314,16 @@ void ProgramData::CreateTagTable()
 
 /**
  * 写出网段数据.
- * @param client GConfClient
+ * @param pSettings GSettings
  */
-void ProgramData::WriteNetSegment(UseGSettings &gs)
+void ProgramData::WriteNetSegment(GSettings *pSettings)
 {
         NetSegment *pns;
         GSList *tlist;
    
         pthread_mutex_lock(&mutex);
         tlist = netseg;
-	char **pList = new char *[g_slist_length(tlist) * 3 + 1];
+	gchar **pList = new gchar *[g_slist_length(tlist) * 3 + 1];
 	int i = 0;
         while (tlist) {
                 pns = (NetSegment *)tlist->data;
@@ -337,19 +334,19 @@ void ProgramData::WriteNetSegment(UseGSettings &gs)
                 tlist = g_slist_next(tlist);
         }
 	pList[i] = NULL;
-        gs.setStrV("scan-net-segment", pList);
+        g_settings_set_strv(pSettings, "scan-net-segment", pList);
         pthread_mutex_unlock(&mutex);
 	delete [] pList;
 }
 
 /**
  * 读取网段数据.
- * @param client GConfClient
+ * @param pSettings GSettings
  */
-void ProgramData::ReadNetSegment(UseGSettings &gs)
+void ProgramData::ReadNetSegment(GSettings *pSettings)
 {
         NetSegment *ns;
-	char **pList = gs.getStrV("scan-net-segment");
+	gchar **pList = g_settings_get_strv(pSettings, "scan-net-segment");
 	
         pthread_mutex_lock(&mutex);
         for(int i = 0; pList[i]; i += 3)
@@ -369,143 +366,139 @@ void ProgramData::ReadNetSegment(UseGSettings &gs)
  * 当本程序写出数据时，程序会自动更新时间戳，所以若当前时间与时间戳间隔太短，
  * 便认为是本程序写出数据导致配置文件信息数据发生了变化，在这种情况下，
  * 响应函数无需理睬数值的变更.\n
- * @param client the GConfClient notifying us.
- * @param cnxnid connection ID from gconf_client_notify_add().
- * @param entry a GConfEntry.
- * @param progdt 程序数据类
+ * @param pSettings GSettings。
+ * @param sKey 发生改变的键。
  */
-/* void ProgramData::GconfNotifyFunc(GConfClient *client, guint cnxnid, */
-/*                                  GConfEntry *entry, ProgramData *progdt) */
-/* { */
-/*         struct timeval stamp; */
-/*         const char *str; */
-/*         bool update; */
+void ProgramData::GSettingsOnKeyChanged(GSettings *pSettings, const gchar *sKey)
+{
+        struct timeval stamp;
+        const char *str;
+        bool update;
 
-/*         /\* 如果没有值则直接跳出 *\/ */
-/*         if (!entry->value) */
-/*                 return; */
-/*         /\* 如果间隔太短则直接跳出 *\/ */
-/*         gettimeofday(&stamp, NULL); */
-/*         if (difftimeval(stamp, progdt->timestamp) < 1.0) */
-/*                 return; */
+        /* 如果没有值则直接跳出 */
+        if (!pSettings || !sKey) return;
+        /* 如果间隔太短则直接跳出 */
+        gettimeofday(&stamp, NULL);
+        if (difftimeval(stamp, progdt.timestamp) < 1.0)
+                return;
 
-/*         /\* 匹配键值并修正 *\/ */
-/*         update = false; //预设更新标记为假 */
-/*         if (strcmp(entry->key, GCONF_PATH "/nick_name") == 0) { */
-/*                 if ( (str = gconf_value_get_string(entry->value))) { */
-/*                         g_free(progdt->nickname); */
-/*                         progdt->nickname = g_strdup(str); */
-/*                         update = true; */
-/*                 } */
-/*         } else if (strcmp(entry->key, GCONF_PATH "/belong_group") == 0) { */
-/*                 if ( (str = gconf_value_get_string(entry->value))) { */
-/*                         g_free(progdt->mygroup); */
-/*                         progdt->mygroup = g_strdup(str); */
-/*                         update = true; */
-/*                 } */
-/*         } else if (strcmp(entry->key, GCONF_PATH "/my_icon") == 0) { */
-/*                 if ( (str = gconf_value_get_string(entry->value))) { */
-/*                         g_free(progdt->myicon); */
-/*                         progdt->myicon = g_strdup(str); */
-/*                         update = true; */
-/*                 } */
-/*         } else if (strcmp(entry->key, GCONF_PATH "/archive_path") == 0) { */
-/*                 if ( (str = gconf_value_get_string(entry->value))) { */
-/*                         g_free(progdt->path); */
-/*                         progdt->path = g_strdup(str); */
-/*                 } */
-/*         } else if (strcmp(entry->key, GCONF_PATH "/personal_sign") == 0) { */
-/*                 if ( (str = gconf_value_get_string(entry->value))) { */
-/*                         g_free(progdt->sign); */
-/*                         progdt->sign = g_strdup(str); */
-/*                         update = true; */
-/*                 } */
-/*         } else if (strcmp(entry->key, GCONF_PATH "/candidacy_encode") == 0) { */
-/*                 if ( (str = gconf_value_get_string(entry->value))) { */
-/*                         g_free(progdt->codeset); */
-/*                         progdt->codeset = g_strdup(str); */
-/*                 } */
-/*         } else if (strcmp(entry->key, GCONF_PATH "/preference_encode") == 0) { */
-/*                 if ( (str = gconf_value_get_string(entry->value))) { */
-/*                         g_free(progdt->encode); */
-/*                         progdt->encode = g_strdup(str); */
-/*                 } */
-/*         } else if (strcmp(entry->key, GCONF_PATH "/pal_icon") == 0) { */
-/*                 if ( (str = gconf_value_get_string(entry->value))) { */
-/*                         g_free(progdt->palicon); */
-/*                         progdt->palicon = g_strdup(str); */
-/*                 } */
-/*         } else if (strcmp(entry->key, GCONF_PATH "/panel_font") == 0) { */
-/*                 if ( (str = gconf_value_get_string(entry->value))) { */
-/*                         g_free(progdt->font); */
-/*                         progdt->font = g_strdup(str); */
-/*                 } */
-/*         } else if (strcmp(entry->key, GCONF_PATH "/hide_startup") == 0) { */
-/*                 if (gconf_value_get_bool(entry->value)) */
-/*                         FLAG_SET(progdt->flags, 6); */
-/*                 else */
-/*                         FLAG_CLR(progdt->flags, 6); */
-/*         } else if (strcmp(entry->key, GCONF_PATH "/open_transmission") == 0) { */
-/*                 if (gconf_value_get_bool(entry->value)) */
-/*                         FLAG_SET(progdt->flags, 5); */
-/*                 else */
-/*                         FLAG_CLR(progdt->flags, 5); */
-/*         } else if (strcmp(entry->key, GCONF_PATH "/use_enter_key") == 0) { */
-/*                 if (gconf_value_get_bool(entry->value)) */
-/*                         FLAG_SET(progdt->flags, 4); */
-/*                 else */
-/*                         FLAG_CLR(progdt->flags, 4); */
-/*         } else if (strcmp(entry->key, GCONF_PATH "/clearup_history") == 0) { */
-/*                 if (gconf_value_get_bool(entry->value)) */
-/*                         FLAG_SET(progdt->flags, 3); */
-/*                 else */
-/*                         FLAG_CLR(progdt->flags, 3); */
-/*         } else if (strcmp(entry->key, GCONF_PATH "/record_log") == 0) { */
-/*                 if (gconf_value_get_bool(entry->value)) */
-/*                         FLAG_SET(progdt->flags, 2); */
-/*                 else */
-/*                         FLAG_CLR(progdt->flags, 2); */
-/*         } else if (strcmp(entry->key, GCONF_PATH "/open_blacklist") == 0) { */
-/*                 if (gconf_value_get_bool(entry->value)) */
-/*                         FLAG_SET(progdt->flags, 1); */
-/*                 else */
-/*                         FLAG_CLR(progdt->flags, 1); */
-/*         } else if (strcmp(entry->key, GCONF_PATH "/proof_shared") == 0) { */
-/*                 if (gconf_value_get_bool(entry->value)) */
-/*                         FLAG_SET(progdt->flags, 0); */
-/*                 else */
-/*                         FLAG_CLR(progdt->flags, 0); */
-/*         } else if (strcmp(entry->key, GCONF_PATH "/trans_tip") == 0) { */
-/*                 if ( (str = gconf_value_get_string(entry->value))) { */
-/*                         g_free(progdt->transtip); */
-/*                         progdt->transtip = g_strdup(str); */
-/*                 } */
-/*         } else if (strcmp(entry->key, GCONF_PATH "/msg_tip") == 0) { */
-/*                 if ( (str = gconf_value_get_string(entry->value))) { */
-/*                         g_free(progdt->transtip); */
-/*                         progdt->transtip = g_strdup(str); */
-/*                 } */
-/*         } else if (strcmp(entry->key, GCONF_PATH "/volume_degree") == 0) { */
-/*                 progdt->volume = gconf_value_get_float(entry->value); */
-/*         } else if (strcmp(entry->key, GCONF_PATH "/transnd_support") == 0) { */
-/*                 if (gconf_value_get_bool(entry->value)) */
-/*                         FLAG_SET(progdt->sndfgs, 2); */
-/*                 else */
-/*                         FLAG_CLR(progdt->sndfgs, 2); */
-/*         } else if (strcmp(entry->key, GCONF_PATH "/msgsnd_support") == 0) { */
-/*                 if (gconf_value_get_bool(entry->value)) */
-/*                         FLAG_SET(progdt->sndfgs, 1); */
-/*                 else */
-/*                         FLAG_CLR(progdt->sndfgs, 1); */
-/*         } else if (strcmp(entry->key, GCONF_PATH "/sound_support") == 0) { */
-/*                 if (gconf_value_get_bool(entry->value)) */
-/*                         FLAG_SET(progdt->sndfgs, 0); */
-/*                 else */
-/*                         FLAG_CLR(progdt->sndfgs, 0); */
-/*         } */
+        /* 匹配键值并修正 */
+        update = false; //预设更新标记为假
+        if (strcmp(sKey, "nick_name") == 0) {
+                if ( (str = g_settings_get_string(pSettings, sKey))) {
+                        g_free(progdt.nickname);
+                        progdt.nickname = g_strdup(str);
+                        update = true;
+                }
+        } else if (strcmp(sKey, "belong_group") == 0) {
+                if ( (str = g_settings_get_string(pSettings, sKey))) {
+                        g_free(progdt.mygroup);
+                        progdt.mygroup = g_strdup(str);
+                        update = true;
+                }
+        } else if (strcmp(sKey, "my_icon") == 0) {
+                if ( (str = g_settings_get_string(pSettings, sKey))) {
+                        g_free(progdt.myicon);
+                        progdt.myicon = g_strdup(str);
+                        update = true;
+                }
+        } else if (strcmp(sKey, "archive_path") == 0) {
+                if ( (str = g_settings_get_string(pSettings, sKey))) {
+                        g_free(progdt.path);
+                        progdt.path = g_strdup(str);
+                }
+        } else if (strcmp(sKey, "personal_sign") == 0) {
+                if ( (str = g_settings_get_string(pSettings, sKey))) {
+                        g_free(progdt.sign);
+                        progdt.sign = g_strdup(str);
+                        update = true;
+                }
+        } else if (strcmp(sKey, "candidacy_encode") == 0) {
+                if ( (str = g_settings_get_string(pSettings, sKey))) {
+                        g_free(progdt.codeset);
+                        progdt.codeset = g_strdup(str);
+                }
+        } else if (strcmp(sKey, "preference_encode") == 0) {
+                if ( (str = g_settings_get_string(pSettings, sKey))) {
+                        g_free(progdt.encode);
+                        progdt.encode = g_strdup(str);
+                }
+        } else if (strcmp(sKey, "pal_icon") == 0) {
+                if ( (str = g_settings_get_string(pSettings, sKey))) {
+                        g_free(progdt.palicon);
+                        progdt.palicon = g_strdup(str);
+                }
+        } else if (strcmp(sKey, "panel_font") == 0) {
+                if ( (str = g_settings_get_string(pSettings, sKey))) {
+                        g_free(progdt.font);
+                        progdt.font = g_strdup(str);
+                }
+        } else if (strcmp(sKey, "hide_startup") == 0) {
+                if (g_settings_get_boolean(pSettings, sKey))
+                        FLAG_SET(progdt.flags, 6);
+                else
+                        FLAG_CLR(progdt.flags, 6);
+        } else if (strcmp(sKey, "open_transmission") == 0) {
+                if (g_settings_get_boolean(pSettings, sKey))
+                        FLAG_SET(progdt.flags, 5);
+                else
+                        FLAG_CLR(progdt.flags, 5);
+        } else if (strcmp(sKey, "use_enter_key") == 0) {
+                if (g_settings_get_boolean(pSettings, sKey))
+                        FLAG_SET(progdt.flags, 4);
+                else
+                        FLAG_CLR(progdt.flags, 4);
+        } else if (strcmp(sKey, "clearup_history") == 0) {
+                if (g_settings_get_boolean(pSettings, sKey))
+                        FLAG_SET(progdt.flags, 3);
+                else
+                        FLAG_CLR(progdt.flags, 3);
+        } else if (strcmp(sKey, "record_log") == 0) {
+                if (g_settings_get_boolean(pSettings, sKey))
+                        FLAG_SET(progdt.flags, 2);
+                else
+                        FLAG_CLR(progdt.flags, 2);
+        } else if (strcmp(sKey, "open_blacklist") == 0) {
+                if (g_settings_get_boolean(pSettings, sKey))
+                        FLAG_SET(progdt.flags, 1);
+                else
+                        FLAG_CLR(progdt.flags, 1);
+        } else if (strcmp(sKey, "proof_shared") == 0) {
+                if (g_settings_get_boolean(pSettings, sKey))
+                        FLAG_SET(progdt.flags, 0);
+                else
+                        FLAG_CLR(progdt.flags, 0);
+        } else if (strcmp(sKey, "trans_tip") == 0) {
+                if ( (str = g_settings_get_string(pSettings, sKey))) {
+                        g_free(progdt.transtip);
+                        progdt.transtip = g_strdup(str);
+                }
+        } else if (strcmp(sKey, "msg_tip") == 0) {
+                if ( (str = g_settings_get_string(pSettings, sKey))) {
+                        g_free(progdt.transtip);
+                        progdt.transtip = g_strdup(str);
+                }
+        } else if (strcmp(sKey, "volume_degree") == 0) {
+	     progdt.volume = g_settings_get_double(pSettings, sKey);
+        } else if (strcmp(sKey, "transnd_support") == 0) {
+                if (g_settings_get_boolean(pSettings, sKey))
+                        FLAG_SET(progdt.sndfgs, 2);
+                else
+                        FLAG_CLR(progdt.sndfgs, 2);
+        } else if (strcmp(sKey, "msgsnd_support") == 0) {
+                if (g_settings_get_boolean(pSettings, sKey))
+                        FLAG_SET(progdt.sndfgs, 1);
+                else
+                        FLAG_CLR(progdt.sndfgs, 1);
+        } else if (strcmp(sKey, "sound_support") == 0) {
+                if (g_settings_get_boolean(pSettings, sKey))
+                        FLAG_SET(progdt.sndfgs, 0);
+                else
+                        FLAG_CLR(progdt.sndfgs, 0);
+        }
 
-/*         /\* 如果需要更新则调用更新处理函数 *\/ */
-/*         if (update) */
-/*                 CoreThread::UpdateMyInfo(); */
-/* } */
+        /* 如果需要更新则调用更新处理函数 */
+        if (update)
+                CoreThread::UpdateMyInfo();
+}
 

@@ -5,7 +5,7 @@ iptux_SOURCES = AnalogFS.cpp Command.cpp CoreThread.cpp DataSettings.cpp \
 	MainWindow.cpp ProgramData.cpp RecvFile.cpp RecvFileData.cpp RevisePal.cpp \
 	SendFile.cpp SendFileData.cpp ShareFile.cpp SoundSystem.cpp StatusIcon.cpp \
 	TcpData.cpp UdpData.cpp callback.cpp dialog.cpp iptux.cpp mess.cpp output.cpp \
-	support.cpp utils.cpp wrapper.cpp UseGSettings.cpp
+	support.cpp utils.cpp wrapper.cpp
 
 AM_CXXFLAGS = -Wall
 
@@ -20,6 +20,6 @@ noinst_HEADERS = AnalogFS.h Command.h CoreThread.h DataSettings.h DetectPal.h Di
 	DialogGroup.h DialogPeer.h HelpDialog.h LogSystem.h MainWindow.h ProgramData.h \
 	RecvFile.h RecvFileData.h RevisePal.h SendFile.h SendFileData.h ShareFile.h \
 	SoundSystem.h StatusIcon.h TcpData.h UdpData.h callback.h deplib.h dialog.h \
-	ipmsg.h mess.h net.h output.h support.h sys.h utils.h wrapper.h UseGSettings.h
+	ipmsg.h mess.h net.h output.h support.h sys.h utils.h wrapper.h
 
 SUBDIRS = uninstall
