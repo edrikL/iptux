@@ -117,5 +117,8 @@ dnl Add the languages which your application supports here.
 ALL_LINGUAS="de en_GB es pl zh_CN zh_TW"
 AM_GLIB_GNU_GETTEXT
 
-AC_OUTPUT(Makefile desktop/Makefile pixmaps/Makefile po/Makefile.in sound/Makefile \
+dnl Add gsettings rules
+GLIB_GSETTINGS
+
+AC_OUTPUT(Makefile gschema/Makefile desktop/Makefile pixmaps/Makefile po/Makefile.in sound/Makefile \
 	src/Makefile src/uninstall/Makefile)

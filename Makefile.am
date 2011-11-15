@@ -2,6 +2,6 @@
 # have all needed files, that a GNU package needs
 AUTOMAKE_OPTIONS = foreign 1.4
 
-SUBDIRS = src desktop pixmaps po sound
+SUBDIRS = src desktop pixmaps po sound gschema
 
 EXTRA_DIST = Makefile.cvs protocol style
