@@ -95,6 +95,7 @@ void ProgramData::WriteProgData()
         g_settings_set_string(settings, "preference-encode", encode);
         g_settings_set_string(settings, "pal-icon", palicon);
         g_settings_set_string(settings, "panel-font", font);
+        g_settings_set_boolean(settings, "open-chat", FLAG_ISSET(flags, 7) ? TRUE : FALSE);
         g_settings_set_boolean(settings, "hide-startup", FLAG_ISSET(flags, 6) ? TRUE : FALSE);
         g_settings_set_boolean(settings, "open-transmission", FLAG_ISSET(flags, 5) ? TRUE : FALSE);
 	g_settings_set_boolean(settings, "use-enter-key", FLAG_ISSET(flags, 4) ? TRUE : FALSE);
@@ -192,6 +193,7 @@ void ProgramData::ReadProgData()
         font = g_settings_get_string(settings, "panel-font");
 	if(strlen(font) == 0) font = g_strdup("Sans Serif 10");
 
+        if(g_settings_get_boolean(settings, "open-chat")) FLAG_SET(flags, 7);
         if(g_settings_get_boolean(settings, "hide-startup")) FLAG_SET(flags, 6);
         if(g_settings_get_boolean(settings, "open-transmission")) FLAG_SET(flags, 5);
         if(g_settings_get_boolean(settings, "use-enter-key")) FLAG_SET(flags, 4);
@@ -384,113 +386,113 @@ void ProgramData::GSettingsOnKeyChanged(GSettings *pSettings, const gchar *sKey)
 
         /* 匹配键值并修正 */
         update = false; //预设更新标记为假
-        if (strcmp(sKey, "nick_name") == 0) {
+        if (strcmp(sKey, "nick-name") == 0) {
                 if ( (str = g_settings_get_string(pSettings, sKey))) {
                         g_free(progdt.nickname);
                         progdt.nickname = g_strdup(str);
                         update = true;
                 }
-        } else if (strcmp(sKey, "belong_group") == 0) {
+        } else if (strcmp(sKey, "belong-group") == 0) {
                 if ( (str = g_settings_get_string(pSettings, sKey))) {
                         g_free(progdt.mygroup);
                         progdt.mygroup = g_strdup(str);
                         update = true;
                 }
-        } else if (strcmp(sKey, "my_icon") == 0) {
+        } else if (strcmp(sKey, "my-icon") == 0) {
                 if ( (str = g_settings_get_string(pSettings, sKey))) {
                         g_free(progdt.myicon);
                         progdt.myicon = g_strdup(str);
                         update = true;
                 }
-        } else if (strcmp(sKey, "archive_path") == 0) {
+        } else if (strcmp(sKey, "archive-path") == 0) {
                 if ( (str = g_settings_get_string(pSettings, sKey))) {
                         g_free(progdt.path);
                         progdt.path = g_strdup(str);
                 }
-        } else if (strcmp(sKey, "personal_sign") == 0) {
+        } else if (strcmp(sKey, "personal-sign") == 0) {
                 if ( (str = g_settings_get_string(pSettings, sKey))) {
                         g_free(progdt.sign);
                         progdt.sign = g_strdup(str);
                         update = true;
                 }
-        } else if (strcmp(sKey, "candidacy_encode") == 0) {
+        } else if (strcmp(sKey, "candidacy-encode") == 0) {
                 if ( (str = g_settings_get_string(pSettings, sKey))) {
                         g_free(progdt.codeset);
                         progdt.codeset = g_strdup(str);
                 }
-        } else if (strcmp(sKey, "preference_encode") == 0) {
+        } else if (strcmp(sKey, "preference-encode") == 0) {
                 if ( (str = g_settings_get_string(pSettings, sKey))) {
                         g_free(progdt.encode);
                         progdt.encode = g_strdup(str);
                 }
-        } else if (strcmp(sKey, "pal_icon") == 0) {
+        } else if (strcmp(sKey, "pal-icon") == 0) {
                 if ( (str = g_settings_get_string(pSettings, sKey))) {
                         g_free(progdt.palicon);
                         progdt.palicon = g_strdup(str);
                 }
-        } else if (strcmp(sKey, "panel_font") == 0) {
+        } else if (strcmp(sKey, "panel-font") == 0) {
                 if ( (str = g_settings_get_string(pSettings, sKey))) {
                         g_free(progdt.font);
                         progdt.font = g_strdup(str);
                 }
-        } else if (strcmp(sKey, "hide_startup") == 0) {
+        } else if (strcmp(sKey, "hide-startup") == 0) {
                 if (g_settings_get_boolean(pSettings, sKey))
                         FLAG_SET(progdt.flags, 6);
                 else
                         FLAG_CLR(progdt.flags, 6);
-        } else if (strcmp(sKey, "open_transmission") == 0) {
+        } else if (strcmp(sKey, "open-transmission") == 0) {
                 if (g_settings_get_boolean(pSettings, sKey))
                         FLAG_SET(progdt.flags, 5);
                 else
                         FLAG_CLR(progdt.flags, 5);
-        } else if (strcmp(sKey, "use_enter_key") == 0) {
+        } else if (strcmp(sKey, "use-enter-key") == 0) {
                 if (g_settings_get_boolean(pSettings, sKey))
                         FLAG_SET(progdt.flags, 4);
                 else
                         FLAG_CLR(progdt.flags, 4);
-        } else if (strcmp(sKey, "clearup_history") == 0) {
+        } else if (strcmp(sKey, "clearup-history") == 0) {
                 if (g_settings_get_boolean(pSettings, sKey))
                         FLAG_SET(progdt.flags, 3);
                 else
                         FLAG_CLR(progdt.flags, 3);
-        } else if (strcmp(sKey, "record_log") == 0) {
+        } else if (strcmp(sKey, "record-log") == 0) {
                 if (g_settings_get_boolean(pSettings, sKey))
                         FLAG_SET(progdt.flags, 2);
                 else
                         FLAG_CLR(progdt.flags, 2);
-        } else if (strcmp(sKey, "open_blacklist") == 0) {
+        } else if (strcmp(sKey, "open-blacklist") == 0) {
                 if (g_settings_get_boolean(pSettings, sKey))
                         FLAG_SET(progdt.flags, 1);
                 else
                         FLAG_CLR(progdt.flags, 1);
-        } else if (strcmp(sKey, "proof_shared") == 0) {
+        } else if (strcmp(sKey, "proof-shared") == 0) {
                 if (g_settings_get_boolean(pSettings, sKey))
                         FLAG_SET(progdt.flags, 0);
                 else
                         FLAG_CLR(progdt.flags, 0);
-        } else if (strcmp(sKey, "trans_tip") == 0) {
+        } else if (strcmp(sKey, "trans-tip") == 0) {
                 if ( (str = g_settings_get_string(pSettings, sKey))) {
                         g_free(progdt.transtip);
                         progdt.transtip = g_strdup(str);
                 }
-        } else if (strcmp(sKey, "msg_tip") == 0) {
+        } else if (strcmp(sKey, "msg-tip") == 0) {
                 if ( (str = g_settings_get_string(pSettings, sKey))) {
                         g_free(progdt.transtip);
                         progdt.transtip = g_strdup(str);
                 }
-        } else if (strcmp(sKey, "volume_degree") == 0) {
+        } else if (strcmp(sKey, "volume-degree") == 0) {
 	     progdt.volume = g_settings_get_double(pSettings, sKey);
         } else if (strcmp(sKey, "transnd_support") == 0) {
                 if (g_settings_get_boolean(pSettings, sKey))
                         FLAG_SET(progdt.sndfgs, 2);
                 else
                         FLAG_CLR(progdt.sndfgs, 2);
-        } else if (strcmp(sKey, "msgsnd_support") == 0) {
+        } else if (strcmp(sKey, "msgsnd-support") == 0) {
                 if (g_settings_get_boolean(pSettings, sKey))
                         FLAG_SET(progdt.sndfgs, 1);
                 else
                         FLAG_CLR(progdt.sndfgs, 1);
-        } else if (strcmp(sKey, "sound_support") == 0) {
+        } else if (strcmp(sKey, "sound-support") == 0) {
                 if (g_settings_get_boolean(pSettings, sKey))
                         FLAG_SET(progdt.sndfgs, 0);
                 else

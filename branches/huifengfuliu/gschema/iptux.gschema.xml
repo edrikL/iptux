@@ -36,6 +36,9 @@
     <key name="trans-tip" type="s">
       <default>""</default>
     </key>
+    <key name="open-chat" type="b">
+      <default>false</default>
+    </key>
     <key name="hide-startup" type="b">
       <default>false</default>
     </key>
