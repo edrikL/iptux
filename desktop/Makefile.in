@@ -211,6 +211,8 @@ logo = $(logo_64) $(logo_48) $(logo_32) $(logo_24) $(logo_22) $(logo_16)
 EXTRA_DIST = $(desktop) $(logo)
 desktop_DATA = $(desktop)
 nobase_dist_logo_DATA = $(logo)
+gtk_update_icon_cache = `$(PKG_CONFIG) gtk+-2.0 --variable=exec_prefix`/bin/gtk-update-icon-cache
+index_theme = $(logodir)/hicolor/index.theme
 all: all-am
 
 .SUFFIXES:
@@ -377,7 +379,8 @@ info: info-am
 info-am:
 
 install-data-am: install-desktopDATA install-nobase_dist_logoDATA
-
+	@$(NORMAL_INSTALL)
+	$(MAKE) $(AM_MAKEFLAGS) install-data-hook
 install-dvi: install-dvi-am
 
 install-dvi-am:
@@ -421,21 +424,35 @@ ps: ps-am
 ps-am:
 
 uninstall-am: uninstall-desktopDATA uninstall-nobase_dist_logoDATA
-
-.MAKE: install-am install-strip
+	@$(NORMAL_INSTALL)
+	$(MAKE) $(AM_MAKEFLAGS) uninstall-hook
+.MAKE: install-am install-data-am install-strip uninstall-am
 
 .PHONY: all all-am check check-am clean clean-generic distclean \
 	distclean-generic distdir dvi dvi-am html html-am info info-am \
 	install install-am install-data install-data-am \
-	install-desktopDATA install-dvi install-dvi-am install-exec \
-	install-exec-am install-html install-html-am install-info \
-	install-info-am install-man install-nobase_dist_logoDATA \
-	install-pdf install-pdf-am install-ps install-ps-am \
-	install-strip installcheck installcheck-am installdirs \
-	maintainer-clean maintainer-clean-generic mostlyclean \
-	mostlyclean-generic pdf pdf-am ps ps-am uninstall uninstall-am \
-	uninstall-desktopDATA uninstall-nobase_dist_logoDATA
+	install-data-hook install-desktopDATA install-dvi \
+	install-dvi-am install-exec install-exec-am install-html \
+	install-html-am install-info install-info-am install-man \
+	install-nobase_dist_logoDATA install-pdf install-pdf-am \
+	install-ps install-ps-am install-strip installcheck \
+	installcheck-am installdirs maintainer-clean \
+	maintainer-clean-generic mostlyclean mostlyclean-generic pdf \
+	pdf-am ps ps-am uninstall uninstall-am uninstall-desktopDATA \
+	uninstall-hook uninstall-nobase_dist_logoDATA
 
+
+install-data-hook: update-icon-cache
+uninstall-hook: update-icon-cache
+update-icon-cache:
+	@-if test ! -f "$(index_theme)"; then \
+		touch $(index_theme); \
+	fi; \
+	if test -x "$(gtk_update_icon_cache)"; then \
+		$(gtk_update_icon_cache) -f $(logodir)/hicolor; \
+	else \
+		gtk-update-icon-cache -f $(logodir)/hicolor; \
+	fi
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

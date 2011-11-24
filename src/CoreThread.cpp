@@ -62,7 +62,7 @@ void CoreThread::CoreThreadEntry()
         /* 定时扫描处理程序内部任务 */
         timerid = gdk_threads_add_timeout(500, GSourceFunc(WatchCoreStatus), this);
         /* 通知所有计算机本大爷上线啦 */
-        SendNotifyToAll(this);
+        pthread_create(&pid, NULL, ThreadFunc(SendNotifyToAll), this);
 }
 
 /**
@@ -863,7 +863,6 @@ void CoreThread::InitThemeSublayerData()
         gtk_icon_theme_append_search_path(theme, __PIXMAPS_PATH "/icon");
         gtk_icon_theme_append_search_path(theme, __PIXMAPS_PATH "/menu");
         gtk_icon_theme_append_search_path(theme, __PIXMAPS_PATH "/tip");
-        gtk_icon_theme_append_search_path(theme, __LOGO_PATH "/hicolor/64x64/apps");
 
         factory = gtk_icon_factory_new();
         gtk_icon_factory_add_default(factory);

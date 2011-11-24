@@ -12,3 +12,19 @@ desktopdir = @desktopdir@
 desktop_DATA = $(desktop)
 logodir = @logodir@
 nobase_dist_logo_DATA = $(logo)
+
+
+gtk_update_icon_cache = `$(PKG_CONFIG) gtk+-2.0 --variable=exec_prefix`/bin/gtk-update-icon-cache
+index_theme = $(logodir)/hicolor/index.theme
+
+install-data-hook: update-icon-cache
+uninstall-hook: update-icon-cache
+update-icon-cache:
+	@-if test ! -f "$(index_theme)"; then \
+		touch $(index_theme); \
+	fi; \
+	if test -x "$(gtk_update_icon_cache)"; then \
+		$(gtk_update_icon_cache) -f $(logodir)/hicolor; \
+	else \
+		gtk-update-icon-cache -f $(logodir)/hicolor; \
+	fi
