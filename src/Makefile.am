@@ -14,12 +14,15 @@ iptux_CPPFLAGS = $(all_includes) @PACKAGE_CFLAGS@
 
 # the library search path.
 iptux_LDADD = $(INTLLIBS) @PACKAGE_LIBS@
-iptux_LDFLAGS = $(all_libraries)
+LIBS = $(all_libraries)
 
 noinst_HEADERS = AnalogFS.h Command.h CoreThread.h DataSettings.h DetectPal.h DialogBase.h \
 	DialogGroup.h DialogPeer.h HelpDialog.h LogSystem.h MainWindow.h ProgramData.h \
 	RecvFile.h RecvFileData.h RevisePal.h SendFile.h SendFileData.h ShareFile.h \
 	SoundSystem.h StatusIcon.h TcpData.h UdpData.h callback.h deplib.h dialog.h \
 	ipmsg.h mess.h net.h output.h support.h sys.h utils.h wrapper.h
+
+gsettings_SCHEMAS = iptux.gschema.xml
+@GSETTINGS_RULES@
 
 SUBDIRS = uninstall

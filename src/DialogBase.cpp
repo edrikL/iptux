@@ -713,7 +713,7 @@ void DialogBase::RemoveSelectedEnclosure(DialogBase *dlgpr)
     GtkTreePath *path;
     GtkTreeModel *model;
     gchar *str_data;
-    GValue a = G_VALUE_INIT;
+    GValue a = { 0 };
     g_type_init ();
     g_value_init (&a, G_TYPE_STRING);
     g_assert (G_VALUE_HOLDS_STRING (&a));

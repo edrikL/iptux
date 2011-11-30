@@ -1,7 +1,8 @@
 #                                               -*- Autoconf -*-
 # Process this file with autoconf to produce a configure script.
 
-AC_INIT(iptux, 0.5.2, jallyx@gmail.com)
+AC_INIT(iptux, 0.5.3, jallyx@gmail.com)
+#AM_MAINTAINER_MODE
 AC_CONFIG_SRCDIR(config.h.in)
 AC_CONFIG_HEADERS(config.h)
 AM_INIT_AUTOMAKE(foreign dist-bzip2 -Wall)
@@ -120,5 +121,5 @@ AM_GLIB_GNU_GETTEXT
 dnl Add gsettings rules
 GLIB_GSETTINGS
 
-AC_OUTPUT(Makefile gschema/Makefile desktop/Makefile pixmaps/Makefile po/Makefile.in sound/Makefile \
+AC_OUTPUT(Makefile desktop/Makefile pixmaps/Makefile po/Makefile.in sound/Makefile \
 	src/Makefile src/uninstall/Makefile)
