@@ -40,6 +40,9 @@ $ tar xzvf iptux-0.x.x.tar.gz
 
 $ cd iptux-0.x.x
 
+$ automake
+/*如果没有这一句可能会提示没有makefile.in文件*/
+
 $ ./configure
 
 $ make
